@@ -1,0 +1,2413 @@
+<!doctype html >
+<!--[if IE 8]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en-US"> <!--<![endif]-->
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-138252192-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-138252192-1');
+</script>
+
+    <title>Apache Sanctuary, cryptography and XML signature in Java - Macro Programming</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="pingback" href="http://www.macroprogramming.com/xmlrpc.php" />
+    <meta property="og:image" content="http://www.macroprogramming.com/wp-content/uploads/2018/09/apache-sanctuary-cryptography-and-xml-signature-in-java.jpg" />
+<!-- This site is optimized with the Yoast SEO plugin v11.9 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Apache Sanctuary, cryptography and XML signature in Java - Macro Programming" />
+<meta property="og:description" content="The widespread use of XML ( eXtensible Markup Language ) has led to the request for security measures to protect privacy, confidentiality, and integrity of XML documents, exploiting their peculiarities and safeguarding their advantages. For example, the need arises or the opportunity to encrypt only certain elements, or to encrypt different elements with different keys &hellip;" />
+<meta property="og:url" content="http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/" />
+<meta property="og:site_name" content="Macro Programming" />
+<meta property="article:section" content="Articles" />
+<meta property="article:published_time" content="2018-09-16T19:48:30+00:00" />
+<meta property="article:modified_time" content="2018-09-16T20:22:33+00:00" />
+<meta property="og:updated_time" content="2018-09-16T20:22:33+00:00" />
+<meta property="og:image" content="http://www.macroprogramming.com/wp-content/uploads/2018/09/apache-sanctuary-cryptography-and-xml-signature-in-java.jpg" />
+<meta property="og:image:width" content="640" />
+<meta property="og:image:height" content="426" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="The widespread use of XML ( eXtensible Markup Language ) has led to the request for security measures to protect privacy, confidentiality, and integrity of XML documents, exploiting their peculiarities and safeguarding their advantages. For example, the need arises or the opportunity to encrypt only certain elements, or to encrypt different elements with different keys [&hellip;]" />
+<meta name="twitter:title" content="Apache Sanctuary, cryptography and XML signature in Java - Macro Programming" />
+<meta name="twitter:image" content="http://www.macroprogramming.com/wp-content/uploads/2018/09/apache-sanctuary-cryptography-and-xml-signature-in-java.jpg" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"http://www.macroprogramming.com/#website","url":"http://www.macroprogramming.com/","name":"Macro Programming","potentialAction":{"@type":"SearchAction","target":"http://www.macroprogramming.com/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"ImageObject","@id":"http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/#primaryimage","url":"http://www.macroprogramming.com/wp-content/uploads/2018/09/apache-sanctuary-cryptography-and-xml-signature-in-java.jpg","width":640,"height":426,"caption":"Apache Sanctuary, cryptography and XML signature in Java"},{"@type":"WebPage","@id":"http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/#webpage","url":"http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/","inLanguage":"en-US","name":"Apache Sanctuary, cryptography and XML signature in Java - Macro Programming","isPartOf":{"@id":"http://www.macroprogramming.com/#website"},"primaryImageOfPage":{"@id":"http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/#primaryimage"},"datePublished":"2018-09-16T19:48:30+00:00","dateModified":"2018-09-16T20:22:33+00:00","author":{"@id":"http://www.macroprogramming.com/#/schema/person/d9733daf7131a7741c8defbbdb5869a9"}},{"@type":["Person"],"@id":"http://www.macroprogramming.com/#/schema/person/d9733daf7131a7741c8defbbdb5869a9","name":"Admin","image":{"@type":"ImageObject","@id":"http://www.macroprogramming.com/#authorlogo","url":"http://0.gravatar.com/avatar/3bb159cb0552447388975ce6107aa0fc?s=96&d=mm&r=g","caption":"Admin"},"sameAs":[]}]}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Macro Programming &raquo; Feed" href="http://www.macroprogramming.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Macro Programming &raquo; Comments Feed" href="http://www.macroprogramming.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Macro Programming &raquo; Apache Sanctuary, cryptography and XML signature in Java Comments Feed" href="http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.macroprogramming.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.5"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='http://www.macroprogramming.com/wp-includes/css/dist/block-library/style.min.css?ver=5.2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='td-plugin-multi-purpose-css'  href='http://www.macroprogramming.com/wp-content/plugins/td-composer/td-multi-purpose/style.css?ver=3593e6198288cd1f8b28dc83dd3b8ada' type='text/css' media='all' />
+<link rel='stylesheet' id='google-fonts-style-css'  href='http://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400%2C400italic%2C600%2C600italic%2C700%7CRoboto%3A300%2C400%2C400italic%2C500%2C500italic%2C700%2C900&#038;ver=8.8.2' type='text/css' media='all' />
+<link rel='stylesheet' id='td-theme-css'  href='http://www.macroprogramming.com/wp-content/themes/Newspaper/style.css?ver=8.8.2' type='text/css' media='all' />
+<link rel='stylesheet' id='td-theme-demo-style-css'  href='http://www.macroprogramming.com/wp-content/themes/Newspaper/includes/demos/tech/demo_style.css?ver=8.8.2' type='text/css' media='all' />
+<link rel='stylesheet' id='tdb_front_style-css'  href='http://www.macroprogramming.com/wp-content/plugins/td-cloud-library/assets/css/tdb_less_front.css?ver=b750612463a242d669bd59c5cf49d705' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<link rel='https://api.w.org/' href='http://www.macroprogramming.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.macroprogramming.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.macroprogramming.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.2.5" />
+<link rel='shortlink' href='http://www.macroprogramming.com/?p=659' />
+<link rel="alternate" type="application/json+oembed" href="http://www.macroprogramming.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.macroprogramming.com%2Fapache-sanctuary-cryptography-and-xml-signature-in-java%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.macroprogramming.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.macroprogramming.com%2Fapache-sanctuary-cryptography-and-xml-signature-in-java%2F&#038;format=xml" />
+			<script>
+				window.tdwGlobal = {"adminUrl":"http:\/\/www.macroprogramming.com\/wp-admin\/","wpRestNonce":"ede3e14ea2","wpRestUrl":"http:\/\/www.macroprogramming.com\/wp-json\/","permalinkStructure":"\/%postname%\/"};
+			</script>
+			<!--[if lt IE 9]><script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
+    <link rel="amphtml" href="http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/amp/">
+<!-- JS generated by theme -->
+
+<script>
+    
+    
+
+	    var tdBlocksArray = []; //here we store all the items for the current page
+
+	    //td_block class - each ajax block uses a object of this class for requests
+	    function tdBlock() {
+		    this.id = '';
+		    this.block_type = 1; //block type id (1-234 etc)
+		    this.atts = '';
+		    this.td_column_number = '';
+		    this.td_current_page = 1; //
+		    this.post_count = 0; //from wp
+		    this.found_posts = 0; //from wp
+		    this.max_num_pages = 0; //from wp
+		    this.td_filter_value = ''; //current live filter value
+		    this.is_ajax_running = false;
+		    this.td_user_action = ''; // load more or infinite loader (used by the animation)
+		    this.header_color = '';
+		    this.ajax_pagination_infinite_stop = ''; //show load more at page x
+	    }
+
+
+        // td_js_generator - mini detector
+        (function(){
+            var htmlTag = document.getElementsByTagName("html")[0];
+
+	        if ( navigator.userAgent.indexOf("MSIE 10.0") > -1 ) {
+                htmlTag.className += ' ie10';
+            }
+
+            if ( !!navigator.userAgent.match(/Trident.*rv\:11\./) ) {
+                htmlTag.className += ' ie11';
+            }
+
+	        if ( navigator.userAgent.indexOf("Edge") > -1 ) {
+                htmlTag.className += ' ieEdge';
+            }
+
+            if ( /(iPad|iPhone|iPod)/g.test(navigator.userAgent) ) {
+                htmlTag.className += ' td-md-is-ios';
+            }
+
+            var user_agent = navigator.userAgent.toLowerCase();
+            if ( user_agent.indexOf("android") > -1 ) {
+                htmlTag.className += ' td-md-is-android';
+            }
+
+            if ( -1 !== navigator.userAgent.indexOf('Mac OS X')  ) {
+                htmlTag.className += ' td-md-is-os-x';
+            }
+
+            if ( /chrom(e|ium)/.test(navigator.userAgent.toLowerCase()) ) {
+               htmlTag.className += ' td-md-is-chrome';
+            }
+
+            if ( -1 !== navigator.userAgent.indexOf('Firefox') ) {
+                htmlTag.className += ' td-md-is-firefox';
+            }
+
+            if ( -1 !== navigator.userAgent.indexOf('Safari') && -1 === navigator.userAgent.indexOf('Chrome') ) {
+                htmlTag.className += ' td-md-is-safari';
+            }
+
+            if( -1 !== navigator.userAgent.indexOf('IEMobile') ){
+                htmlTag.className += ' td-md-is-iemobile';
+            }
+
+        })();
+
+
+
+
+        var tdLocalCache = {};
+
+        ( function () {
+            "use strict";
+
+            tdLocalCache = {
+                data: {},
+                remove: function (resource_id) {
+                    delete tdLocalCache.data[resource_id];
+                },
+                exist: function (resource_id) {
+                    return tdLocalCache.data.hasOwnProperty(resource_id) && tdLocalCache.data[resource_id] !== null;
+                },
+                get: function (resource_id) {
+                    return tdLocalCache.data[resource_id];
+                },
+                set: function (resource_id, cachedData) {
+                    tdLocalCache.remove(resource_id);
+                    tdLocalCache.data[resource_id] = cachedData;
+                }
+            };
+        })();
+
+    
+    
+var td_viewport_interval_list=[{"limitBottom":767,"sidebarWidth":228},{"limitBottom":1018,"sidebarWidth":300},{"limitBottom":1140,"sidebarWidth":324}];
+var td_animation_stack_effect="type0";
+var tds_animation_stack=true;
+var td_animation_stack_specific_selectors=".entry-thumb, img";
+var td_animation_stack_general_selectors=".td-animation-stack img, .td-animation-stack .entry-thumb, .post img";
+var td_ajax_url="http:\/\/www.macroprogramming.com\/wp-admin\/admin-ajax.php?td_theme_name=Newspaper&v=8.8.2";
+var td_get_template_directory_uri="http:\/\/www.macroprogramming.com\/wp-content\/themes\/Newspaper";
+var tds_snap_menu="smart_snap_always";
+var tds_logo_on_sticky="show_header_logo";
+var tds_header_style="9";
+var td_please_wait="Please wait...";
+var td_email_user_pass_incorrect="User or password incorrect!";
+var td_email_user_incorrect="Email or username incorrect!";
+var td_email_incorrect="Email incorrect!";
+var tds_more_articles_on_post_enable="show";
+var tds_more_articles_on_post_time_to_wait="";
+var tds_more_articles_on_post_pages_distance_from_top=0;
+var tds_theme_color_site_wide="#4ac5db";
+var tds_smart_sidebar="enabled";
+var tdThemeName="Newspaper";
+var td_magnific_popup_translation_tPrev="Previous (Left arrow key)";
+var td_magnific_popup_translation_tNext="Next (Right arrow key)";
+var td_magnific_popup_translation_tCounter="%curr% of %total%";
+var td_magnific_popup_translation_ajax_tError="The content from %url% could not be loaded.";
+var td_magnific_popup_translation_image_tError="The image #%curr% could not be loaded.";
+var tdDateNamesI18n={"month_names":["January","February","March","April","May","June","July","August","September","October","November","December"],"month_names_short":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"day_names":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"day_names_short":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]};
+var td_ad_background_click_link="";
+var td_ad_background_click_target="";
+</script>
+
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+<script type="application/ld+json">
+                        {
+                            "@context": "http://schema.org",
+                            "@type": "BreadcrumbList",
+                            "itemListElement": [{
+                            "@type": "ListItem",
+                            "position": 1,
+                                "item": {
+                                "@type": "WebSite",
+                                "@id": "http://www.macroprogramming.com/",
+                                "name": "Home"                                               
+                            }
+                        },{
+                            "@type": "ListItem",
+                            "position": 2,
+                                "item": {
+                                "@type": "WebPage",
+                                "@id": "http://www.macroprogramming.com/category/development/xml/",
+                                "name": "XML"
+                            }
+                        },{
+                            "@type": "ListItem",
+                            "position": 3,
+                                "item": {
+                                "@type": "WebPage",
+                                "@id": "http://www.macroprogramming.com/category/development/xml/articles-xml/",
+                                "name": "Articles"                                
+                            }
+                        },{
+                            "@type": "ListItem",
+                            "position": 4,
+                                "item": {
+                                "@type": "WebPage",
+                                "@id": "http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/",
+                                "name": "Apache Sanctuary, cryptography and XML signature in Java"                                
+                            }
+                        }    ]
+                        }
+                       </script>
+<!-- Button style compiled by theme -->
+
+<style>
+    .tdm-menu-active-style3 .tdm-header.td-header-wrap .sf-menu > .current-category-ancestor > a,
+                .tdm-menu-active-style3 .tdm-header.td-header-wrap .sf-menu > .current-menu-ancestor > a,
+                .tdm-menu-active-style3 .tdm-header.td-header-wrap .sf-menu > .current-menu-item > a,
+                .tdm-menu-active-style3 .tdm-header.td-header-wrap .sf-menu > .sfHover > a,
+                .tdm-menu-active-style3 .tdm-header.td-header-wrap .sf-menu > li > a:hover,
+                .tdm_block_column_content:hover .tdm-col-content-title-url .tdm-title,
+                .tds-button2 .tdm-btn-text,
+                .tds-button2 i,
+                .tds-button5:hover .tdm-btn-text,
+                .tds-button5:hover i,
+                .tds-button6 .tdm-btn-text,
+                .tds-button6 i,
+                .tdm_block_list .tdm-list-item i,
+                .tdm_block_pricing .tdm-pricing-feature i,
+                .tdm-social-item i {
+                  color: #4ac5db;
+                }
+                .tdm-menu-active-style5 .td-header-menu-wrap .sf-menu > .current-menu-item > a,
+                .tdm-menu-active-style5 .td-header-menu-wrap .sf-menu > .current-menu-ancestor > a,
+                .tdm-menu-active-style5 .td-header-menu-wrap .sf-menu > .current-category-ancestor > a,
+                .tdm-menu-active-style5 .td-header-menu-wrap .sf-menu > li > a:hover,
+                .tdm-menu-active-style5 .td-header-menu-wrap .sf-menu > .sfHover > a,
+                .tds-button1,
+                .tds-button6:after,
+                .tds-title2 .tdm-title-line:after,
+                .tds-title3 .tdm-title-line:after,
+                .tdm_block_pricing.tdm-pricing-featured:before,
+                .tdm_block_pricing.tds_pricing2_block.tdm-pricing-featured .tdm-pricing-header,
+                .tds-progress-bar1 .tdm-progress-bar:after,
+                .tds-progress-bar2 .tdm-progress-bar:after,
+                .tds-social3 .tdm-social-item {
+                  background-color: #4ac5db;
+                }
+                .tdm-menu-active-style4 .tdm-header .sf-menu > .current-menu-item > a,
+                .tdm-menu-active-style4 .tdm-header .sf-menu > .current-menu-ancestor > a,
+                .tdm-menu-active-style4 .tdm-header .sf-menu > .current-category-ancestor > a,
+                .tdm-menu-active-style4 .tdm-header .sf-menu > li > a:hover,
+                .tdm-menu-active-style4 .tdm-header .sf-menu > .sfHover > a,
+                .tds-button2:before,
+                .tds-button6:before,
+                .tds-progress-bar3 .tdm-progress-bar:after {
+                  border-color: #4ac5db;
+                }
+                .tdm-btn-style1 {
+					background-color: #4ac5db;
+				}
+				.tdm-btn-style2:before {
+				    border-color: #4ac5db;
+				}
+				.tdm-btn-style2 {
+				    color: #4ac5db;
+				}
+				.tdm-btn-style3 {
+				    -webkit-box-shadow: 0 2px 16px #4ac5db;
+                    -moz-box-shadow: 0 2px 16px #4ac5db;
+                    box-shadow: 0 2px 16px #4ac5db;
+				}
+				.tdm-btn-style3:hover {
+				    -webkit-box-shadow: 0 4px 26px #4ac5db;
+                    -moz-box-shadow: 0 4px 26px #4ac5db;
+                    box-shadow: 0 4px 26px #4ac5db;
+				}
+</style>
+
+	<style id="tdw-css-placeholder"></style></head>
+
+<body class="post-template-default single single-post postid-659 single-format-standard apache-sanctuary-cryptography-and-xml-signature-in-java global-block-template-1 td-tech single_template td-animation-stack-type0 td-full-layout" itemscope="itemscope" itemtype="http://schema.org/WebPage">
+
+        <div class="td-scroll-up"><i class="td-icon-menu-up"></i></div>
+    
+    <div class="td-menu-background"></div>
+<div id="td-mobile-nav">
+    <div class="td-mobile-container">
+        <!-- mobile menu top section -->
+        <div class="td-menu-socials-wrap">
+            <!-- socials -->
+            <div class="td-menu-socials">
+                            </div>
+            <!-- close button -->
+            <div class="td-mobile-close">
+                <a href="#"><i class="td-icon-close-mobile"></i></a>
+            </div>
+        </div>
+
+        <!-- login section -->
+        
+        <!-- menu section -->
+        <div class="td-mobile-content">
+            <div class="menu-main-menu-container"><ul id="menu-main-menu" class="td-mobile-main-menu"><li id="menu-item-370" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-first menu-item-370"><a href="http://www.macroprogramming.com/category/design/">Design<i class="td-icon-menu-right td-element-after"></i></a>
+<ul class="sub-menu">
+	<li id="menu-item-376" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-376"><a href="http://www.macroprogramming.com/category/design/xhtml/">XHTML</a></li>
+	<li id="menu-item-371" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-371"><a href="http://www.macroprogramming.com/category/design/css/">CSS</a></li>
+	<li id="menu-item-373" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-373"><a href="http://www.macroprogramming.com/category/design/graphics/">Graphics</a></li>
+	<li id="menu-item-372" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-372"><a href="http://www.macroprogramming.com/category/design/editor/">Editor</a></li>
+</ul>
+</li>
+<li id="menu-item-377" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children menu-item-377"><a href="http://www.macroprogramming.com/category/development/">Development<i class="td-icon-menu-right td-element-after"></i></a>
+<ul class="sub-menu">
+	<li id="menu-item-384" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-384"><a href="http://www.macroprogramming.com/category/development/javascript/">JavaScript<i class="td-icon-menu-right td-element-after"></i></a>
+	<ul class="sub-menu">
+		<li id="menu-item-410" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-410"><a href="http://www.macroprogramming.com/category/development/javascript/articles-javascript/">Articles</a></li>
+	</ul>
+</li>
+	<li id="menu-item-385" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-385"><a href="http://www.macroprogramming.com/category/development/mobile/">Mobile<i class="td-icon-menu-right td-element-after"></i></a>
+	<ul class="sub-menu">
+		<li id="menu-item-413" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-413"><a href="http://www.macroprogramming.com/category/development/mobile/articles-mobile/">Articles</a></li>
+	</ul>
+</li>
+	<li id="menu-item-386" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-386"><a href="http://www.macroprogramming.com/category/development/php/">PHP<i class="td-icon-menu-right td-element-after"></i></a>
+	<ul class="sub-menu">
+		<li id="menu-item-415" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-415"><a href="http://www.macroprogramming.com/category/development/php/articles/">Articles</a></li>
+	</ul>
+</li>
+	<li id="menu-item-387" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-387"><a href="http://www.macroprogramming.com/category/development/programming/">Programming</a></li>
+	<li id="menu-item-383" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-383"><a href="http://www.macroprogramming.com/category/development/java/">Java</a></li>
+	<li id="menu-item-378" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-378"><a href="http://www.macroprogramming.com/category/development/net/">.Net</a></li>
+	<li id="menu-item-381" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-381"><a href="http://www.macroprogramming.com/category/development/cms/">CMS</a></li>
+	<li id="menu-item-388" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-388"><a href="http://www.macroprogramming.com/category/development/ruby/">Ruby</a></li>
+	<li id="menu-item-389" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-389"><a href="http://www.macroprogramming.com/category/development/xml/">XML</a></li>
+</ul>
+</li>
+<li id="menu-item-390" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-390"><a href="http://www.macroprogramming.com/category/system/">System<i class="td-icon-menu-right td-element-after"></i></a>
+<ul class="sub-menu">
+	<li id="menu-item-393" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-393"><a href="http://www.macroprogramming.com/category/system/safety/">Safety</a></li>
+	<li id="menu-item-394" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-394"><a href="http://www.macroprogramming.com/category/system/server/">Server</a></li>
+	<li id="menu-item-395" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-395"><a href="http://www.macroprogramming.com/category/system/web-application/">Web Application</a></li>
+	<li id="menu-item-391" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-391"><a href="http://www.macroprogramming.com/category/system/database/">Database</a></li>
+	<li id="menu-item-392" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-392"><a href="http://www.macroprogramming.com/category/system/linux/">Linux</a></li>
+</ul>
+</li>
+</ul></div>        </div>
+    </div>
+
+    <!-- register/login section -->
+    </div>    <div class="td-search-background"></div>
+<div class="td-search-wrap-mob">
+	<div class="td-drop-down-search" aria-labelledby="td-header-search-button">
+		<form method="get" class="td-search-form" action="http://www.macroprogramming.com/">
+			<!-- close button -->
+			<div class="td-search-close">
+				<a href="#"><i class="td-icon-close-mobile"></i></a>
+			</div>
+			<div role="search" class="td-search-input">
+				<span>Search</span>
+				<input id="td-header-search-mob" type="text" value="" name="s" autocomplete="off" />
+			</div>
+		</form>
+		<div id="td-aj-search-mob"></div>
+	</div>
+</div>    
+    
+    <div id="td-outer-wrap" class="td-theme-wrap">
+    
+        <!--
+Header style 9
+-->
+
+<div class="td-header-wrap td-header-style-9 ">
+    
+    <div class="td-header-top-menu-full td-container-wrap ">
+        <div class="td-container td-header-row td-header-top-menu">
+            <!-- LOGIN MODAL -->
+        </div>
+    </div>
+
+    <div class="td-banner-wrap-full td-logo-wrap-full td-logo-mobile-loaded td-container-wrap ">
+        <div class="td-header-sp-logo">
+            		<a class="td-main-logo" href="http://www.macroprogramming.com/">
+			<img class="td-retina-data"  data-retina="http://www.macroprogramming.com/wp-content/uploads/2018/08/logo-01-544-x-180.png" src="http://www.macroprogramming.com/wp-content/uploads/2018/08/logo-01-272-x-90.png" alt="Macro Programming | For all your Codding Needs" title="Macro Programming | For all your Codding Needs" width="272"/>
+			<span class="td-visual-hidden">Macro Programming</span>
+		</a>
+	        </div>
+    </div>
+
+    <div class="td-header-menu-wrap-full td-container-wrap ">
+        
+        <div class="td-header-menu-wrap td-header-gradient ">
+            <div class="td-container td-header-row td-header-main-menu">
+                <div id="td-header-menu" role="navigation">
+    <div id="td-top-mobile-toggle"><a href="#"><i class="td-icon-font td-icon-mobile"></i></a></div>
+    <div class="td-main-menu-logo td-logo-in-header">
+        		<a class="td-mobile-logo td-sticky-header" href="http://www.macroprogramming.com/">
+			<img class="td-retina-data" data-retina="http://www.macroprogramming.com/wp-content/uploads/2018/08/logo-01-280-x-96.png" src="http://www.macroprogramming.com/wp-content/uploads/2018/08/logo-01-140-x-48.png" alt="Macro Programming | For all your Codding Needs" title="Macro Programming | For all your Codding Needs"/>
+		</a>
+			<a class="td-header-logo td-sticky-header" href="http://www.macroprogramming.com/">
+			<img class="td-retina-data" data-retina="http://www.macroprogramming.com/wp-content/uploads/2018/08/logo-01-544-x-180.png" src="http://www.macroprogramming.com/wp-content/uploads/2018/08/logo-01-272-x-90.png" alt="Macro Programming | For all your Codding Needs" title="Macro Programming | For all your Codding Needs"/>
+		</a>
+	    </div>
+    <div class="menu-main-menu-container"><ul id="menu-main-menu-1" class="sf-menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-first td-menu-item td-normal-menu menu-item-370"><a href="http://www.macroprogramming.com/category/design/">Design</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-376"><a href="http://www.macroprogramming.com/category/design/xhtml/">XHTML</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-371"><a href="http://www.macroprogramming.com/category/design/css/">CSS</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-373"><a href="http://www.macroprogramming.com/category/design/graphics/">Graphics</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-372"><a href="http://www.macroprogramming.com/category/design/editor/">Editor</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-has-children td-menu-item td-normal-menu menu-item-377"><a href="http://www.macroprogramming.com/category/development/">Development</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children td-menu-item td-normal-menu menu-item-384"><a href="http://www.macroprogramming.com/category/development/javascript/">JavaScript</a>
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-410"><a href="http://www.macroprogramming.com/category/development/javascript/articles-javascript/">Articles</a></li>
+	</ul>
+</li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children td-menu-item td-normal-menu menu-item-385"><a href="http://www.macroprogramming.com/category/development/mobile/">Mobile</a>
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-413"><a href="http://www.macroprogramming.com/category/development/mobile/articles-mobile/">Articles</a></li>
+	</ul>
+</li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children td-menu-item td-normal-menu menu-item-386"><a href="http://www.macroprogramming.com/category/development/php/">PHP</a>
+	<ul class="sub-menu">
+		<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-415"><a href="http://www.macroprogramming.com/category/development/php/articles/">Articles</a></li>
+	</ul>
+</li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-387"><a href="http://www.macroprogramming.com/category/development/programming/">Programming</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-383"><a href="http://www.macroprogramming.com/category/development/java/">Java</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-378"><a href="http://www.macroprogramming.com/category/development/net/">.Net</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-381"><a href="http://www.macroprogramming.com/category/development/cms/">CMS</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-388"><a href="http://www.macroprogramming.com/category/development/ruby/">Ruby</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent td-menu-item td-normal-menu menu-item-389"><a href="http://www.macroprogramming.com/category/development/xml/">XML</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children td-menu-item td-normal-menu menu-item-390"><a href="http://www.macroprogramming.com/category/system/">System</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-393"><a href="http://www.macroprogramming.com/category/system/safety/">Safety</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-394"><a href="http://www.macroprogramming.com/category/system/server/">Server</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-395"><a href="http://www.macroprogramming.com/category/system/web-application/">Web Application</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-391"><a href="http://www.macroprogramming.com/category/system/database/">Database</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-392"><a href="http://www.macroprogramming.com/category/system/linux/">Linux</a></li>
+</ul>
+</li>
+</ul></div></div>
+
+
+    <div class="header-search-wrap">
+        <div class="td-search-btns-wrap">
+            <a id="td-header-search-button" href="#" role="button" class="dropdown-toggle " data-toggle="dropdown"><i class="td-icon-search"></i></a>
+            <a id="td-header-search-button-mob" href="#" role="button" class="dropdown-toggle " data-toggle="dropdown"><i class="td-icon-search"></i></a>
+        </div>
+
+        <div class="td-drop-down-search" aria-labelledby="td-header-search-button">
+            <form method="get" class="td-search-form" action="http://www.macroprogramming.com/">
+                <div role="search" class="td-head-form-search-wrap">
+                    <input id="td-header-search" type="text" value="" name="s" autocomplete="off" /><input class="wpb_button wpb_btn-inverse btn" type="submit" id="td-header-search-top" value="Search" />
+                </div>
+            </form>
+            <div id="td-aj-search"></div>
+        </div>
+    </div>
+            </div>
+        </div>
+    </div>
+
+            <div class="td-banner-wrap-full td-banner-bg td-container-wrap ">
+            <div class="td-container-header td-header-row td-header-header">
+                <div class="td-header-sp-recs">
+                    <div class="td-header-rec-wrap">
+    <div class="td-a-rec td-a-rec-id-header  td_uid_1_5e5136b52223a_rand td_block_template_1"><!--<div class="td-all-devices"><a href="#" target="_blank"><img src="http://www.macroprogramming.com/wp-content/uploads/2018/08/rec728.jpg"/></a></div>--></div>
+</div>                </div>
+            </div>
+        </div>
+    
+</div><div class="td-main-content-wrap td-container-wrap">
+
+    <div class="td-container td-post-template-default ">
+        <div class="td-crumb-container"><div class="entry-crumbs"><span><a title="" class="entry-crumb" href="http://www.macroprogramming.com/">Home</a></span> <i class="td-icon-right td-bread-sep"></i> <span><a title="View all posts in XML" class="entry-crumb" href="http://www.macroprogramming.com/category/development/xml/">XML</a></span> <i class="td-icon-right td-bread-sep"></i> <span><a title="View all posts in Articles" class="entry-crumb" href="http://www.macroprogramming.com/category/development/xml/articles-xml/">Articles</a></span> <i class="td-icon-right td-bread-sep td-bred-no-url-last"></i> <span class="td-bred-no-url-last">Apache Sanctuary, cryptography and XML signature in Java</span></div></div>
+
+        <div class="td-pb-row">
+                                    <div class="td-pb-span8 td-main-content" role="main">
+                            <div class="td-ss-main-content">
+                                
+    <article id="post-659" class="post-659 post type-post status-publish format-standard has-post-thumbnail hentry category-articles-xml category-development category-xml" itemscope itemtype="http://schema.org/Article">
+        <div class="td-post-header">
+
+            <ul class="td-category"><li class="entry-category"><a  href="http://www.macroprogramming.com/category/development/xml/">XML</a></li><li class="entry-category"><a  href="http://www.macroprogramming.com/category/development/xml/articles-xml/">Articles</a></li><li class="entry-category"><a  href="http://www.macroprogramming.com/category/development/">Development</a></li></ul>
+            <header class="td-post-title">
+                <h1 class="entry-title">Apache Sanctuary, cryptography and XML signature in Java</h1>
+
+                
+
+                <div class="td-module-meta-info">
+                    <div class="td-post-author-name"><div class="td-author-by">By</div> <a href="http://www.macroprogramming.com/author/yaser-2-2/">Admin</a><div class="td-author-line"> - </div> </div>                    <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2018-09-16T19:48:30+00:00" >September 16, 2018</time></span>                    <div class="td-post-comments"><a href="http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/#respond"><i class="td-icon-comments"></i>0</a></div>                    <div class="td-post-views"><i class="td-icon-views"></i><span class="td-nr-views-659">82</span></div>                </div>
+
+            </header>
+
+        </div>
+
+        <div class="td-post-sharing-top"><div id="td_social_sharing_article_top" class="td-post-sharing td-ps-bg td-ps-notext td-post-sharing-style1 "><div class="td-post-sharing-visible"><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-facebook" href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.macroprogramming.com%2Fapache-sanctuary-cryptography-and-xml-signature-in-java%2F">
+                                        <div class="td-social-but-icon"><i class="td-icon-facebook"></i></div>
+                                        <div class="td-social-but-text">Facebook</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-twitter" href="https://twitter.com/intent/tweet?text=Apache+Sanctuary%2C+cryptography+and+XML+signature+in+Java&url=http%3A%2F%2Fwww.macroprogramming.com%2Fapache-sanctuary-cryptography-and-xml-signature-in-java%2F&via=Macro+Programming">
+                                        <div class="td-social-but-icon"><i class="td-icon-twitter"></i></div>
+                                        <div class="td-social-but-text">Twitter</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-googleplus" href="https://plus.google.com/share?url=http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/">
+                                        <div class="td-social-but-icon"><i class="td-icon-googleplus"></i></div>
+                                        <div class="td-social-but-text">Google+</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-pinterest" href="https://pinterest.com/pin/create/button/?url=http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/&amp;media=http://www.macroprogramming.com/wp-content/uploads/2018/09/apache-sanctuary-cryptography-and-xml-signature-in-java.jpg&description=Apache+Sanctuary%2C+cryptography+and+XML+signature+in+Java">
+                                        <div class="td-social-but-icon"><i class="td-icon-pinterest"></i></div>
+                                        <div class="td-social-but-text">Pinterest</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-whatsapp" href="whatsapp://send?text=Apache Sanctuary, cryptography and XML signature in Java %0A%0A http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/">
+                                        <div class="td-social-but-icon"><i class="td-icon-whatsapp"></i></div>
+                                        <div class="td-social-but-text">WhatsApp</div>
+                                    </a></div><div class="td-social-sharing-hidden"><ul class="td-pulldown-filter-list"></ul><a class="td-social-sharing-button td-social-handler td-social-expand-tabs" href="#" data-block-uid="td_social_sharing_article_top">
+                                    <div class="td-social-but-icon"><i class="td-icon-plus td-social-expand-tabs-icon"></i></div>
+                                </a></div></div></div>
+
+        <div class="td-post-content">
+
+        
+        <p>The widespread use of XML ( eXtensible Markup Language ) has led to the request for security measures to protect privacy, confidentiality, and integrity of XML documents, exploiting their peculiarities and safeguarding their advantages. For example, the need arises or the opportunity to encrypt only certain elements, or to encrypt different elements with different keys to be able to distribute the same document to different subjects. The W3C ( World Wide Web Consortium ) has accordingly defined a series of security standards integrated with XML solutions through vocabularies and processing rules, so as to meet increasing security requirements.</p>
+<p>Among the main security standards are those aimed at ensuring integrity and authentication ( XML Digital Signature ) and confidentiality ( XML Encryption ). In this article, after an introduction to XML Security, we will present Apache Santuario, a project that aims to offer an implementation of these XML standards by proposing libraries for both Java and C ++. To show the potential of the framework, we will address some examples of use in Java covering the main use cases, ie cryptography with symmetric and asymmetric key and digital signature.</p>
+<p>The article consists of the following sections:</p>
+<ul>
+<li>XML Security: introduction</li>
+<li>Encryption and XML signature in Java, Apache Sanctuary</li>
+<li>Apache Sanctuary: XML encryption</li>
+<li>Apache Sanctuary: XML signature</li>
+</ul>
+<p>Apache Sanctuary requires Java 1.5 (or higher). The article will present some programmatic examples of the use of the framework. To do this, make sure you have correctly installed the Java Development Kit 1.5 (or higher). In the archive that will be attached at the end of the discussion, it will be possible to find an Eclipse project with the examples described below.</p>
+<h2>XML Security: introduction</h2>
+<p>Security is essential to ensure the smooth processing of transactions, to maintain privacy and confidentiality, and to ensure that information is used appropriately. Old physical layer-based security systems do not scale efficiently on the Internet because of the heterogeneous nature of hardware and software systems and administrative, application, or more general conflicts for different security rules. This has resulted in the request for extensible standards capable of meeting or adapting to constantly changing requirements, capable of interacting with the old inherited systems and being used in a modular way, avoiding the need to be bound to unused portions.</p>
+<p>The essential requirement of these standards is that they are perfectly capable of working with content created using XML, with the aim of safeguarding the advantages and functionalities of XML in the best possible way.</p>
+<p>The old security technologies provided a set of algorithms and technologies that are often inappropriate for security applications for XML. Among the main reasons is the fact that often these technologies use binary formats, to the detriment of the legibility of documents and the use of common XML parsers, or do not support content management capabilities, such as XPath.</p>
+<p>The idea behind XML security is to define processing structures and rules that can be shared by applications using common tools and avoiding excessive customization of applications that should guarantee security. In XML Security there is, therefore, the reuse of concepts and algorithms in order to guarantee interoperability between a large scale of applications.</p>
+<p>Among the main XML Security standards we can include:</p>
+<table class="tabella_htmlit">
+<tbody>
+<tr>
+<th>Standard</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>Integrity and signature</td>
+<td><strong>XML Signatures</strong></td>
+</tr>
+<tr>
+<td>confidentiality</td>
+<td><strong>XML Encryption</strong></td>
+</tr>
+<tr>
+<td>Canonization</td>
+<td><strong>Canonical XML</strong></td>
+</tr>
+<tr>
+<td>Key management</td>
+<td><strong>XML Key Management Specification</strong></td>
+</tr>
+<tr>
+<td>Authentication and authorizations</td>
+<td><strong>Security Assertion Markup Language</strong></td>
+</tr>
+<tr>
+<td>Rules for authorization</td>
+<td><strong>XML Access Control Markup Language</strong></td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>Among the main applications of XML Security, we can include security for Web Services, privacy ( Platform for Privacy Preferences ) and DRM ( Digital Rights Management, for example, eXtensible Rights Markup Language 2.0 ).</p>
+<h2>Standard Java and Apache Sanctuary</h2>
+<p>XML Encryption and XML Signatures are the reference standards of W3C for cryptography and XML authentication. These two specifications are already set out in the XML language guide, so we will limit ourselves to a brief introduction.</p>
+<p>XML Encryption: the standard aims at encrypting data and tags of an XML document, allowing to encrypt only some parts, following the idea that it is not normally necessary to encrypt the entire document. Moreover, the possibility to encrypt different parts of the document with different keys allows the same XML document to be distributed to different recipients, with individual recipients able to decrypt only the parts within their competence. The encrypted information is enclosed by a tag and the encrypted data represented with the string resulting from the encryption. This cryptography thus provides a level of granular control, allowing you to diversify access to the document based on the user. Furthermore, since the data is encrypted but not the file, the document is recognizable by the XML parsers and as such is processed.</p>
+<p>XML Signatures: through the digital signature, the aim is to guarantee the authentication and integrity of the documents, that is to establish the identity of the sender and verify that there have been no alterations during the transport. To compensate for variations due to parsers or file systems, XML Signatures is strictly dependent on the concept of canonization, which aims to recognize the equivalence between two XML documents even in the presence of heterogeneous environments. To apply a signature to the content, a canonization algorithm is used that exploits data and tags in order to create a unique signature. The client receiving the information decrypts the signature distinguishing between encrypted content before adding the signature and encrypted content after signing. Subsequently, the following is followed by the decryption of the following signature and verification of data integrity by applying the same canonization algorithm to the decrypted content, in order to compare the result with the signature included in the XML document. Using XML Signatures in combination with XML Encryption, it is possible to ensure that the data sent are the same as those received, without compromising the concept of targeted audience.</p>
+<p>The standards in Java: In Java, two projects were started to provide APIs for the two standards, respectively project 105 ( JSR 105 ) to define standard APIs for generating and validating XML signatures in Java and project 106 ( JSR 106 ) to define Standard API for XML encryption in Java. However, while project 105 has reached a final state, the same can not be said for project 106, withdrawn in 2010, therefore Java does not offer native support for XML Encryption.</p>
+<p>As a result, to have the necessary APIs to encrypt XML documents following the XML Encryption specifications, we need to rely on third-party libraries. In this article, we will introduce the Java library developed in the Apache Sanctuary project.</p>
+<p>Apache Santuario originated around 2000 at the University of Siegen, Germany, in collaboration with some Greek companies and is co-funded by the European Commission (ISIS program). In 2001, in order to promote the use of digital signatures in XML, it was decided to make the code freely available to the public by bringing the project under the umbrella of the Apache Software Foundation and its Apache license. The experience was successful and in 2006 was voted as Apache TLP ( Top Level Project ) and renamed Apache Sanctuary.</p>
+<p>Apache Santuario aims to provide the implementation of the main security standards for XML, currently XML-Signature and XML Encryption. There are distributions for C ++ and Java, in this article we will deepen the <a href="http://santuario.apache.org/download.html" target="_blank" rel="noopener">Java distribution</a>, coming to version 1.5.6. From the download page, you can download the project in the stable version, in the beta version (currently 2.0.0), or in previous versions. It is also possible to import the sample project starting from the <a href="http://svn.apache.org/viewvc/santuario/xml-security-java/" target="_blank" rel="noopener">Apache-SVN</a> repository.</p>
+<p>In the next sections, we will follow examples of using the framework in which we will show how to use the APIs to encrypt and decrypt and then how to apply and verify the XML signature. The examples were made using an Eclipse project with the following structure.</p>
+<figure id="attachment_660" aria-describedby="caption-attachment-660" style="width: 531px" class="wp-caption aligncenter"><img class="size-full wp-image-660" src="http://www.macroprogramming.com/wp-content/uploads/2018/09/ProgettoSantuario.png" alt="ProgettoSantuario" width="531" height="370" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/09/ProgettoSantuario.png 531w, http://www.macroprogramming.com/wp-content/uploads/2018/09/ProgettoSantuario-300x209.png 300w, http://www.macroprogramming.com/wp-content/uploads/2018/09/ProgettoSantuario-100x70.png 100w" sizes="(max-width: 531px) 100vw, 531px" /><figcaption id="caption-attachment-660" class="wp-caption-text">ProgettoSantuario</figcaption></figure>
+<p>The packages are divided according to the sections of the article, with a package ( example.utilities) intended to accommodate commonly used classes. The folder libs contain the libraries imported into the project, libraries taken from the Apache Santuario project folder of the same name. The folder build will be used to host the files generated by the examples, while the folder samples contain some pre-existing files that will be used by the example on the digital signature. It will be possible to find the project with the examples described in the archive attached to the article.</p>
+<h2>Apache Sanctuary: XML encryption</h2>
+<p>This section presents examples of cryptography with asymmetric and asymmetric key. We will start with a simple case to see how the framework allows you to encrypt a document, laying the groundwork to address other examples where you are asked to encrypt only a portion or different elements with different keys.</p>
+<h2>XML Encryption: Symmetric Key</h2>
+<p>In symmetric key cryptography, the encoding and decryption function use the same private key (or different but related private keys), a solution that poses security problems related to key distribution. Starting from symmetric key cryptography, we will present examples of increasing complexity with which we will explore different possibilities offered by the frameworks.</p>
+<p>We begin by introducing the classes of the package example.utilitiesthat contain methods exploited in the examples that will follow. The first class DomAndParserUtilities,, contains static methods for writing to file and loading an XML document from file.</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public class DomAndParserUtilities {<br />
+public static void outputDocToFile (Document doc, String fileName) throws Exception {<br />
+File encryptionFile = new File (fileName);<br />
+FileOutputStream f = new FileOutputStream (encryptionFile);<br />
+TransformerFactory factory = TransformerFactory.newInstance ();<br />
+Transformer transformer = factory.newTransformer ();<br />
+transformer.setOutputProperty (OutputKeys.OMIT_XML_DECLARATION, &#8220;yes&#8221;);<br />
+DOMSource source = new DOMSource (doc);<br />
+StreamResult result = new StreamResult (f);<br />
+transformer.transform (source, result);<br />
+f.close ();<br />
+System.out.println (&#8220;XML created:&#8221; + encryptionFile.toURI (). ToURL (). ToString ());<br />
+}<br />
+public static Document loadEncryptionDocument (String fileName) throws Exception {<br />
+File encryptionFile = new File (fileName);<br />
+DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance ();<br />
+dbf.setNamespaceAware (true);<br />
+DocumentBuilder db = dbf.newDocumentBuilder ();<br />
+Document document = db.parse (encryptionFile);<br />
+System.out.println (&#8220;XML read:&#8221; + encryptionFile.toURI (). ToURL (). ToString ());<br />
+return document;<br />
+}<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>The second class, KeysUtilitiesto generate keys and to store on file and to load from file a KEK ( Key Encryption Key ), key used to protect other keys.</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public class KeysUtilities {<br />
+public static SecretKey GenerateAndStoreKeyEncryptionKey (String fileName) throws Exception {<br />
+String jceAlgorithmName = &#8220;DESede&#8221;;<br />
+KeyGenerator keyGenerator = KeyGenerator.getInstance (jceAlgorithmName);<br />
+SecretKey kek = keyGenerator.generateKey ();<br />
+byte [] keyBytes = kek.getEncoded ();<br />
+File kekFile = new File (fileName);<br />
+FileOutputStream f = new FileOutputStream(kekFile);<br />
+f.write(keyBytes);<br />
+f.close();<br />
+System.out.println(&#8220;Key encryption key file: &#8221; + kekFile.toURI().toURL().toString());<br />
+return kek;<br />
+}<br />
+public static SecretKey GenerateDataEncryptionKey() throws Exception {<br />
+String jceAlgorithmName = &#8220;AES&#8221;;<br />
+KeyGenerator keyGenerator = KeyGenerator.getInstance(jceAlgorithmName);<br />
+keyGenerator.init(128);<br />
+return keyGenerator.generateKey();<br />
+}<br />
+public static SecretKey loadKeyEncryptionKey(String fileName) throws Exception {<br />
+String jceAlgorithmName = &#8220;DESede&#8221;;<br />
+File kekFile = new File(fileName);<br />
+System.out.println(&#8220;Key encryption key file: &#8221; + kekFile.toURI().toURL().toString());<br />
+DESedeKeySpec keySpec = new DESedeKeySpec(JavaUtils.getBytesFromFile(fileName));<br />
+SecretKeyFactory skf = SecretKeyFactory.getInstance(jceAlgorithmName);<br />
+SecretKey key = skf.generateSecret(keySpec);<br />
+return key;<br />
+}<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>Example 1: Encrypt and decrypt an XML document<br />
+The first example follows the example in the distribution of Apache Santuario ( samples/org/apache/xml/security/samples/encryption/) and consists of two classes, Encrypter1e Decrypter1. With the first class we will go to crypt a simple XML using a symmetric key, with the second we will reverse the procedure.</p>
+<h2>Encrypter1</h2>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public class Encrypter1{<br />
+static {<br />
+org.apache.xml.security.Init.init();<br />
+}<br />
+private static Document createSampleDocument() throws Exception {<br />
+javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();<br />
+dbf.setNamespaceAware(true);<br />
+javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();<br />
+Document document = db.newDocument();<br />
+Element root = document.createElementNS(&#8220;http://www.apache.org/ns/#app1&#8221;, &#8220;apache:RootElement&#8221;);<br />
+root.setAttributeNS(Constants.NamespaceSpecNS, &#8220;xmlns:apache&#8221;, &#8220;http://www.apache.org/ns/#app1&#8221;);<br />
+document.appendChild(root);<br />
+root.appendChild(document.createTextNode(&#8220;\n&#8221;));<br />
+Element childElement = document.createElementNS(&#8220;http://www.apache.org/ns/#app1&#8221;, &#8220;apache:foo&#8221;);<br />
+childElement.appendChild(document.createTextNode(&#8220;Testo d&#8217;esempio&#8221;));<br />
+root.appendChild(childElement);<br />
+return document;<br />
+}<br />
+public static void main(String unused[]) throws Exception {<br />
+Document document = createSampleDocument();<br />
+//chiave AES per crittare l&#8217;elemento<br />
+Key symmetricKey = KeysUtilities.GenerateDataEncryptionKey();<br />
+//chiave DESede per crittare la chiave simmetrica<br />
+Key kek = KeysUtilities.GenerateAndStoreKeyEncryptionKey(&#8220;build/kek/filekey1.txt&#8221;);<br />
+String algorithmURI = XMLCipher.TRIPLEDES_KeyWrap;<br />
+XMLCipher keyCipher = XMLCipher.getInstance(algorithmURI);<br />
+keyCipher.init(XMLCipher.WRAP_MODE, kek);<br />
+EncryptedKey encryptedKey = keyCipher.encryptKey(document, symmetricKey);<br />
+//crittografia del documento<br />
+Element rootElement = document.getDocumentElement();<br />
+algorithmURI = XMLCipher.AES_128;<br />
+XMLCipher xmlCipher = XMLCipher.getInstance(algorithmURI);<br />
+xmlCipher.init(XMLCipher.ENCRYPT_MODE, symmetricKey);<br />
+//impostazione delle informazioni nel documento<br />
+EncryptedData encryptedData = xmlCipher.getEncryptedData();<br />
+KeyInfo keyInfo = new KeyInfo(document);<br />
+keyInfo.add(encryptedKey);<br />
+encryptedData.setKeyInfo(keyInfo);<br />
+//modifica del documento e scrittura del file crittato<br />
+xmlCipher.doFinal(document, rootElement, true);<br />
+DomAndParserUtilities.outputDocToFile(document, &#8220;build/symmetric/encrypted1.xml&#8221;);<br />
+}<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>First of all, it must be said that to use the functions of the XML Security library it will be necessary to invoke the static method org.apache.xml.security.Init.init(), this must be done both in the cryptography and decryption phase, even if in some of the examples that follow it will not be highlighted.</p>
+<p>The class contains a static ( createSampleDocument) method in which a simple XML document is created using the Document Object Model (DOM) API, a document based on the root and a child element containing a text string. This method is invoked by the main to generate the XML to be encrypted. Subsequently, using the method GenerateDataEncryptionKey, a symmetric key is generated, key which is in turn encrypted by an additional key (KEK) generated and stored ( kek/filekey1.txt) by the method GenerateAndStoreKeyEncryptionKey. Because KEK protects the actual key, KEK allows us to add key information to the XML document.</p>
+<p>The cryptography is done by means of the method doFinal, to which are passed three parameters: the document to be encrypted, the root element of the document and a third Boolean parameter that set to true inform that it must be coded only the content, thus excluding from the cryptography the element root, which instead would have been encrypted too setting the parameter to false. Note that the method doFinalacts directly on the XML document that is passed, so after the invocation, the document will be encrypted and will be ready to be written to file, as happens in the following passage ( outputDocToFile) storing it in the file encrypted1.xml.</p>
+<p>Exploring the generated file ( symmetric/encrypted1.xml) you will see that the child element has been replaced by the element EncyptedDatacontaining information regarding the way encryption occurred ( EncryptionMethod ), key information (KeyInfo, contains the key and information on the method with which has been encrypted, in our case the Triple DES , and finally the original content of the element, encrypted ( CipherData ). Now let&#8217;s go to the decryption.</p>
+<h2>Decrypter1</h2>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public class Decrypter1{<br />
+static {<br />
+org.apache.xml.security.Init.init();<br />
+}<br />
+public static void main(String unused[]) throws Exception {<br />
+Document document = DomAndParserUtilities.loadEncryptionDocument(&#8220;build/symmetric/encrypted1.xml&#8221;);<br />
+Element encryptedDataElement = (Element) document.getElementsByTagNameNS(<br />
+EncryptionConstants.EncryptionSpecNS,<br />
+EncryptionConstants._TAG_ENCRYPTEDDATA).item(0);<br />
+//caricamento della chiave per decrittare la chiave<br />
+Key kek = KeysUtilities.loadKeyEncryptionKey(&#8220;build/kek/filekey1.txt&#8221;);<br />
+XMLCipher xmlCipher = XMLCipher.getInstance();<br />
+xmlCipher.init(XMLCipher.DECRYPT_MODE, null);<br />
+xmlCipher.setKEK(kek);<br />
+//documento decrittato e memorizzato<br />
+xmlCipher.doFinal(document, encryptedDataElement);<br />
+DomAndParserUtilities.outputDocToFile(document, &#8220;build/symmetric/decrypted1.xml&#8221;);<br />
+}<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>The decryption takes place in 3 phases: in the first phase, the node to be decrypted is isolated, starting from the previously encrypted document ( loadEncryptionDocument); subsequently the decryption key is loaded from the file containing the KEK ( filekey1.txt), key which will be used to decrypt the key contained in the file encrypted1.xml. At this point, the information necessary to decrypt is complete and the decryption of the document can be performed and subsequent storage on a file, which occurs once again using an instance of the class, XMLCiphergenerating an xml which will be clear in this case symmetric/decrypted1.xml. We note that the element that needs to be shared between the two executions is the file containing the KEK.</p>
+<p>In these examples the class XMLCipher, provided by the library XMLSecurity, is the hinge class, as it provides the methods for encrypting and decrypting documents and elements (in both cases the method doFinal) and methods for collecting and reading key information such as KEK or key symmetrical; it has been developed to resemble the class javax.crypto.Cipherto facilitates</p>
+<h2>Example 2: Encrypt and decrypt an element</h2>
+<p>In the introductory section, we have seen that one of the reasons that led to the request of specific security standards for XML is the opportunity to encrypt only those sections that require to preserve data privacy. Below is an example in which we will show how to encrypt only one of the elements of an XML document.</p>
+<p>Note that, as we will do in this example, we can use Decrypter1the decryption class without modification, provided we use the same names as the previously chosen files to store the KEK and the encrypted XML. The only drawback is that by doing so we will overwrite previously created files. If you want to avoid overwriting old files, you will have to change the names assigned in the following class and consequently in the class Decrypter1.</p>
+<p>Let&#8217;s move on to the realization of the class Encrypter1_1, it is organized in a similar way to the previous one, a static call to the method org.apache.xml.security.Init.init(), a method createSampleDocumentto create the XML document and the one mainin which we will execute the steps to encrypt an element. Following the method createSampleDocument.</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+private static Document createSampleDocument() throws Exception {<br />
+javax.xml.parsers.DocumentBuilderFactory dbf =<br />
+javax.xml.parsers.DocumentBuilderFactory.newInstance();<br />
+dbf.setNamespaceAware(true);<br />
+javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();<br />
+Document document = db.newDocument();<br />
+//1 (root)<br />
+Element root =<br />
+document.createElementNS(&#8220;http://www.apache.org/ns/#app1&#8221;, &#8220;apache:RootElement&#8221;);<br />
+root.setAttributeNS(Constants.NamespaceSpecNS, &#8220;xmlns:apache&#8221;, &#8220;http://www.apache.org/ns/#app1&#8221;);<br />
+root.setAttributeNS(Constants.NamespaceSpecNS, &#8220;xmlns:child&#8221;, &#8220;http://www.apache.org/ns/#app2&#8221;);<br />
+document.appendChild(root);<br />
+root.appendChild(document.createTextNode(&#8220;\n&#8221;));<br />
+//1.1 (child)<br />
+Element childElement =<br />
+document.createElementNS(&#8220;http://www.apache.org/ns/#app1&#8221;, &#8220;child&#8221;);<br />
+root.appendChild(childElement);<br />
+root.appendChild(document.createTextNode(&#8220;\n&#8221;));<br />
+//1.1.1 (child 1 of child)<br />
+Element childElement2 =<br />
+document.createElementNS(&#8220;http://www.apache.org/ns/#app2&#8221;, &#8220;child:elA&#8221;);<br />
+childElement2.appendChild(<br />
+document.createTextNode(&#8220;Testo d&#8217;esempio 1&#8221;));<br />
+childElement.appendChild(childElement2);<br />
+//1.1.1 (child 2 of child)<br />
+Element childElement3 =<br />
+document.createElementNS(&#8220;http://www.apache.org/ns/#app2&#8221;, &#8220;child:elB&#8221;);<br />
+childElement3.appendChild(<br />
+document.createTextNode(&#8220;Testo d&#8217;esempio 2&#8243;));<br />
+childElement.appendChild(childElement3);<br />
+return document;<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>This time the XML document will consist of a root, a child and two leaves. In the mainwe will go to encrypt only the first element.</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public static void main(String unused[]) throws Exception {<br />
+Document document = createSampleDocument();<br />
+//chiave AES per crittare l&#8217;elemento<br />
+Key symmetricKey = KeysUtilities.GenerateDataEncryptionKey();<br />
+//chiave DESede per crittare la chiave simmetrica<br />
+Key kek = KeysUtilities.GenerateAndStoreKeyEncryptionKey(&#8220;build/kek/filekey1.txt&#8221;);<br />
+String algorithmURI = XMLCipher.TRIPLEDES_KeyWrap;<br />
+XMLCipher keyCipher = XMLCipher.getInstance(algorithmURI);<br />
+keyCipher.init(XMLCipher.WRAP_MODE, kek);<br />
+EncryptedKey encryptedKey = keyCipher.encryptKey(document, symmetricKey);<br />
+//selezione dell&#8217;elemento da crittare<br />
+Element rootElement = document.getDocumentElement();<br />
+NodeList listNode1 = rootElement.getChildNodes();<br />
+Element child=null;<br />
+int count=0;<br />
+for(int i=0;i&lt;listNode1.getLength();i++){<br />
+if(listNode1.item(i).getNodeType()==Node.ELEMENT_NODE){<br />
+count++;<br />
+if(count==1){<br />
+child = (Element) listNode1.item(i);<br />
+break;<br />
+}<br />
+}<br />
+}<br />
+Element childOfChild=null;<br />
+int count2=0;<br />
+NodeList listNode2 = child.getChildNodes();<br />
+for(int i=0;i&lt;listNode2.getLength();i++){<br />
+if(listNode2.item(i).getNodeType()==Node.ELEMENT_NODE){<br />
+count2++;<br />
+if(count2==1){<br />
+childOfChild = (Element) listNode2.item(i);<br />
+break;<br />
+}<br />
+}<br />
+}<br />
+//crittografia del documento<br />
+algorithmURI = XMLCipher.AES_128;<br />
+XMLCipher xmlCipher = XMLCipher.getInstance(algorithmURI);<br />
+xmlCipher.init(XMLCipher.ENCRYPT_MODE, symmetricKey);<br />
+//impostazione delle informazioni nel documento<br />
+EncryptedData encryptedData = xmlCipher.getEncryptedData();<br />
+KeyInfo keyInfo = new KeyInfo(document);<br />
+keyInfo.add(encryptedKey);<br />
+encryptedData.setKeyInfo(keyInfo);<br />
+//modifica del documento e scrittura del file crittato<br />
+xmlCipher.doFinal(document, childOfChild, true);<br />
+DomAndParserUtilities.outputDocToFile(document, &#8220;build/symmetric/encrypted1.xml&#8221;);<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>Compared to the previous case, there is also the code to identify the element to be encrypted ( childOfChild), it is passed to the method doFinalinstead of the root. The passage from the encryption of the entire document to the encryption of one of its elements is natural, being able to exploit pre-existing XML APIs and cryptographic APIs designed specifically for XML.</p>
+<p>Observing the encrypted document we will find the remaining elements unchanged, including the other leaf, while the encrypted element will have only the clear tag; wanting to obscure even the tag, we should simply set up false the third parameter of the call doFinal. If we have left the file names unchanged, to get the decrypted document we will not have to do anything but use the class Decrypter1.</p>
+<p>Example 3: encrypt and decrypt different elements with different keys<br />
+Another opportunity offered to us by XML Security concerns the possibility of diversifying access to the document based on the user. In this third example, we will see how to encrypt different elements with different keys with Apache Sanctuary, so that each user is able to decrypt only the information of his own competence.</p>
+<p>Once again, the organization of classes ( Encrypter2e Decrypter2) follows that previously seen. The method createSampleDocumentreturns a document based on the root, a child and three leaves.</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+private static Document createSampleDocument() throws Exception {<br />
+javax.xml.parsers.DocumentBuilderFactory dbf =<br />
+javax.xml.parsers.DocumentBuilderFactory.newInstance();<br />
+dbf.setNamespaceAware(true);<br />
+javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();<br />
+Document document = db.newDocument();<br />
+//1 (root)<br />
+Element root = document.createElementNS(&#8220;http://www.apache.org/ns/#app1&#8221;, &#8220;apache:RootElement&#8221;);<br />
+root.setAttributeNS(Constants.NamespaceSpecNS, &#8220;xmlns:apache&#8221;, &#8220;http://www.apache.org/ns/#app1&#8221;);<br />
+root.setAttributeNS(Constants.NamespaceSpecNS, &#8220;xmlns:child&#8221;, &#8220;http://www.apache.org/ns/#app2&#8221;);<br />
+document.appendChild(root);<br />
+//1.1 (child)<br />
+Element childElement = document.createElementNS(&#8220;http://www.apache.org/ns/#app1&#8221;, &#8220;child&#8221;);<br />
+root.appendChild(childElement);<br />
+//1.1.1 (child 1 of child)<br />
+Element childElement2 = document.createElementNS(&#8220;http://www.apache.org/ns/#app2&#8221;, &#8220;child:elA&#8221;);<br />
+childElement2.appendChild(document.createTextNode(&#8220;Testo d&#8217;esempio 1&#8221;));<br />
+childElement.appendChild(childElement2);<br />
+//1.1.1 (child 2 of child)<br />
+Element childElement3 = document.createElementNS(&#8220;http://www.apache.org/ns/#app2&#8221;, &#8220;child:elB&#8221;);<br />
+childElement3.appendChild(document.createTextNode(&#8220;Testo d&#8217;esempio 2&#8221;));<br />
+childElement.appendChild(childElement3);<br />
+//1.1.3 (child 3 of child)<br />
+Element childElement4 = document.createElementNS(&#8220;http://www.apache.org/ns/#app2&#8221;, &#8220;child:elC&#8221;);<br />
+childElement4.appendChild(document.createTextNode(&#8220;Testo d&#8217;esempio 3&#8243;));<br />
+childElement.appendChild(childElement4);<br />
+return document;<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>Following is the main.</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public static void main(String unused[]) throws Exception {<br />
+Document document = createSampleDocument();<br />
+//chiavi AES per crittare due elementi con due chiavi differenti<br />
+Key symmetricKey1 = KeysUtilities.GenerateDataEncryptionKey();<br />
+Key symmetricKey2 = KeysUtilities.GenerateDataEncryptionKey();<br />
+//chiavi DESede per crittare le chiavi simmetriche<br />
+Key kek1 = KeysUtilities.GenerateAndStoreKeyEncryptionKey(&#8220;build/kek/filekey2-1.txt&#8221;);<br />
+Key kek2 = KeysUtilities.GenerateAndStoreKeyEncryptionKey(&#8220;build/kek/filekey2-2.txt&#8221;);<br />
+String algorithmURI = XMLCipher.TRIPLEDES_KeyWrap;<br />
+XMLCipher keyCipher = XMLCipher.getInstance(algorithmURI);<br />
+keyCipher.init(XMLCipher.WRAP_MODE, kek1);<br />
+EncryptedKey encryptedKey1 = keyCipher.encryptKey(document, symmetricKey1);<br />
+XMLCipher keyCipher2 = XMLCipher.getInstance(algorithmURI);<br />
+keyCipher2.init(XMLCipher.WRAP_MODE, kek2);<br />
+EncryptedKey encryptedKey2 = keyCipher2.encryptKey(document, symmetricKey2);<br />
+//selezione degli elementi da crittare<br />
+Element rootElement = document.getDocumentElement();<br />
+NodeList listNode1 = rootElement.getChildNodes();<br />
+Element child=null;<br />
+int count=0;<br />
+for(int i=0;i&lt;listNode1.getLength();i++){<br />
+if(listNode1.item(i).getNodeType()==Node.ELEMENT_NODE){<br />
+count++;<br />
+if(count==1){<br />
+child = (Element) listNode1.item(i);<br />
+break;<br />
+}<br />
+}<br />
+}<br />
+Element childOfChild1=null;<br />
+int count2=0;<br />
+NodeList listNode2 = child.getChildNodes();<br />
+for(int i=0;i&lt;listNode2.getLength();i++){<br />
+if(listNode2.item(i).getNodeType()==Node.ELEMENT_NODE){<br />
+count2++;<br />
+if(count2==1){<br />
+childOfChild1 = (Element) listNode2.item(i);<br />
+break;<br />
+}<br />
+}<br />
+}<br />
+Element childOfChild2=null;<br />
+int count3=0;<br />
+for(int i=0;i&lt;listNode2.getLength();i++){<br />
+if(listNode2.item(i).getNodeType()==Node.ELEMENT_NODE){<br />
+count3++;<br />
+if(count3==2){<br />
+childOfChild2 = (Element) listNode2.item(i);<br />
+break;<br />
+}<br />
+}<br />
+}<br />
+algorithmURI = XMLCipher.AES_128;<br />
+XMLCipher xmlCipher = XMLCipher.getInstance(algorithmURI);<br />
+xmlCipher.init(XMLCipher.ENCRYPT_MODE, symmetricKey1);<br />
+XMLCipher xmlCipher2 = XMLCipher.getInstance(algorithmURI);<br />
+xmlCipher2.init(XMLCipher.ENCRYPT_MODE, symmetricKey2);<br />
+//impostazione delle informazioni nel documento<br />
+EncryptedData encryptedData = xmlCipher.getEncryptedData();<br />
+KeyInfo keyInfo = new KeyInfo(document);<br />
+keyInfo.add(encryptedKey1);<br />
+encryptedData.setKeyInfo(keyInfo);<br />
+EncryptedData encryptedData2 = xmlCipher2.getEncryptedData();<br />
+KeyInfo keyInfo2 = new KeyInfo(document);<br />
+keyInfo2.add(encryptedKey2);<br />
+encryptedData2.setKeyInfo(keyInfo2);<br />
+//modifica del documento e scrittura del file crittato<br />
+xmlCipher.doFinal(document, childOfChild1, true);<br />
+xmlCipher2.doFinal(document, childOfChild2, true);<br />
+DomAndParserUtilities.outputDocToFile(document, &#8220;build/symmetric/encrypted2.xml&#8221;);<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>In the mainduplicate we find most of the calls of the methods and instances of the previously used classes. We have in fact created two keys and consequently two KEKs, stored in separate files. In the same way we find two calls to the method doFinal, each call is made its own different leaf, so that eventually we will find a document with two leaves encrypted, but with different keys, and a leaf in the clear. According to the distribution policy of the files that contain the KEK, we can choose whether to enable the complete reading of the document or whether to allow to read only a part, providing the relative KEK.</p>
+<p>Similar differences are reported in the class Decrypter2:</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public static void main(String unused[]) throws Exception {<br />
+Document document = DomAndParserUtilities.loadEncryptionDocument(&#8220;build/symmetric/encrypted2.xml&#8221;);<br />
+//individuazione elementi da decriptare<br />
+NodeList list1 = document.getElementsByTagNameNS(EncryptionConstants.EncryptionSpecNS, EncryptionConstants._TAG_ENCRYPTEDDATA);<br />
+Element encryptedDataElement1 = (Element) list1.item(0);<br />
+Element encryptedDataElement2 = (Element) list1.item(1);<br />
+//caricamento delle kek<br />
+Key kek1 = KeysUtilities.loadKeyEncryptionKey(&#8220;build/kek/filekey2-1.txt&#8221;);<br />
+Key kek2 = KeysUtilities.loadKeyEncryptionKey(&#8220;build/kek/filekey2-2.txt&#8221;);<br />
+XMLCipher xmlCipher1 = XMLCipher.getInstance();<br />
+XMLCipher xmlCipher2 = XMLCipher.getInstance();<br />
+xmlCipher1.init(XMLCipher.DECRYPT_MODE, null);<br />
+xmlCipher1.setKEK(kek1);<br />
+xmlCipher2.init(XMLCipher.DECRYPT_MODE, null);<br />
+xmlCipher2.setKEK(kek2);<br />
+//documento decrittato e memorizzato (commentare una delle due chiamate doFinal per decriptare solo una parte)<br />
+xmlCipher1.doFinal(document, encryptedDataElement1);<br />
+xmlCipher2.doFinal(document, encryptedDataElement2);<br />
+DomAndParserUtilities.outputDocToFile(document, &#8220;build/symmetric/decrypted2.xml&#8221;);<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>Having identified the elements to be decrypted, in this example both KEKs are acquired and the method is invoked doFinalfrom each of the two instances of the class XMLCipher, having a specific KEK associated to each of them. The final result is the completely decrypted document. We can comment on one of the two method calls doFinaland see that the document will only be decrypted in part, based on which of the two calls is commented. Having therefore only one of the files containing the KEKs, we can not decrypt the whole document but we will have to limit ourselves to the part of our competence.</p>
+<p>understanding of its functionality.</p>
+<h2>Asymmetric key</h2>
+<p>In asymmetric key cryptography two keys are used: one of encryption that can be made public and one of decryption that must remain private. From one key the other cannot be obtained, so it is possible to distribute the public key without privacy concerns; this is the opposite of what happens with symmetric key cryptography. This advantage is however paid in terms of computational complexity. To overcome the problem of the time needed to encrypt data, a commonly used approach is to adopt a shared key algorithm to encrypt and decrypt data, and then use a public key algorithm to encrypt and decrypt the shared key. In this way it is possible to quickly encrypt and decrypt, even though we can count on the greater security guaranteed by asymmetric keys.</p>
+<h2>Encrypt and decrypt a document with an asymmetric key</h2>
+<p>In this example based on EncryptAndDecrypt, we will focus on mainboth the encryption and the decryption part; the method createSampleDocumentis limited as before to create an elementary XML document.</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+private static Document createSampleDocument() throws Exception {<br />
+Document document = XMLUtils.createDocumentBuilder(false).newDocument();<br />
+Element rootElement = document.createElement(&#8220;root&#8221;);<br />
+document.appendChild(rootElement);<br />
+Element elem = document.createElement(&#8220;elem&#8221;);<br />
+Text text = document.createTextNode(&#8220;text&#8221;);<br />
+elem.appendChild(text);<br />
+rootElement.appendChild(elem);<br />
+return document;<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>Below the main.</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public static void main(String[] args) throws Exception {<br />
+Document document = createSampleDocument();<br />
+DomAndParserUtilities.outputDocToFile(document, &#8220;build/asymmetric/doc1.xml&#8221;);<br />
+//Creazione dalla chiave di criptazione dati<br />
+byte[] keyBytes = { 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7 };<br />
+SecretKeySpec dataEncryptKey = new SecretKeySpec(keyBytes, &#8220;AES&#8221;);<br />
+//Creazione di chiave pubblica e privata<br />
+KeyFactory keyFactory = KeyFactory.getInstance(&#8220;RSA&#8221;);<br />
+BigInteger keyOrigin = new BigInteger(&#8220;8710a2bcb2f3fdac177f0ae0461c2dd0ebf72e0d88a5400583a7d8bdabd6&#8221; +<br />
+&#8220;ae009d30cfdf6acb5b6a64cdc730bc630a39d946d08babffe62ea20a87e37c93b3b0e8a8e576045b&#8221; +<br />
+&#8220;bddfbde83ca9bfa180fe6a5f5eee60661936d728314e809201ef52cd71d9fa3c8ce83f9d30ab5e08&#8221; +<br />
+&#8220;1539219e7e45dd6a60be65ac95d2049b8f21&#8221;, 16);<br />
+BigInteger pubPartial = new BigInteger(&#8220;10001&#8221;, 16);<br />
+BigInteger privPartial = new BigInteger(&#8220;20c39e569c2aa80cc91e5e6b0d56e49e5bbf78827bf56a546c1d996c597&#8221; +<br />
+&#8220;5187cb9a50fa828e5efe51d52f5d112c20bc700b836facadca6e0051afcdfe866841e37d207c0295&#8221; +<br />
+&#8220;36ff8674b301e2198b2c56abb0a0313f8ff84c1fcd6fa541aa6e5d9c018fab4784d2940def5dc709&#8221; +<br />
+&#8220;ddc714d73b6c23b5d178eaa5933577b8e8ae9&#8221;, 16);<br />
+RSAPublicKeySpec pubKeySpec = new RSAPublicKeySpec(keyOrigin, pubPartial);<br />
+RSAPrivateKeySpec privKeySpec = new RSAPrivateKeySpec(keyOrigin, privPartial);<br />
+RSAPublicKey pubKey = (RSAPublicKey) keyFactory.generatePublic(pubKeySpec);<br />
+RSAPrivateKey privKey = (RSAPrivateKey) keyFactory.generatePrivate(privKeySpec);<br />
+//Crittografia della chiave di criptazione dati con la kek<br />
+XMLCipher keyCipher = XMLCipher.getInstance(XMLCipher.RSA_v1dot5);<br />
+keyCipher.init(XMLCipher.WRAP_MODE, pubKey);<br />
+EncryptedKey encryptedKey = keyCipher.encryptKey(document, dataEncryptKey);<br />
+String keyName = &#8220;asymmetricExample&#8221;;<br />
+KeyInfo kekInfo = new KeyInfo(document);<br />
+kekInfo.addKeyName(keyName);<br />
+encryptedKey.setKeyInfo(kekInfo);<br />
+//Crittografia dei dati<br />
+XMLCipher xmlCipher = XMLCipher.getInstance(XMLCipher.AES_128);<br />
+xmlCipher.init(XMLCipher.ENCRYPT_MODE, dataEncryptKey);<br />
+EncryptedData encryptedData = xmlCipher.getEncryptedData();<br />
+KeyInfo keyInfo = new KeyInfo(document);<br />
+keyInfo.add(encryptedKey);<br />
+encryptedData.setKeyInfo(keyInfo);<br />
+Element rootElement = (Element) document.getFirstChild();<br />
+xmlCipher.doFinal(document, rootElement, true);<br />
+DomAndParserUtilities.outputDocToFile(document, &#8220;build/asymmetric/doc2.xml&#8221;);<br />
+//Decriptazione<br />
+//Esempio con utilizzo di un KeyResolver interno<br />
+MyPrivateKeyResolver.pk = privKey;<br />
+MyPrivateKeyResolver.pkName = keyName;<br />
+decryptDocument(document, new MyPrivateKeyResolver(), 3);<br />
+//Esempio con utilizzo di un KeyResolver statico<br />
+KeyResolver.registerAtStart(MyPrivateKeyResolver.class.getName(), false);<br />
+decryptDocument(document, null, 4);<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>The generation of XML follows the invocations for the generation of public and private keys. The public key will serve as KEK to encrypt the document&#8217;s encryption key. It is interesting to focus on how to construct keys; public key and private key are constructed starting from a common matrix, the BigInteger keyOriginvalue that in the RSA algorithm takes the module name. Together with the module, the two keys are generated using the respective exponents, exclusive of each of the two keys and also BigInteger. The generation of keys takes place through a factory( java.security.KeyFactory).</p>
+<p>Subsequently, the encryption of the data encryption key takes place with KEK, where the public key plays the role of KEK, and then the encryption of the document is carried out, to which the information relating to the data encryption key is attached (as seen already in the examples related to the symmetric key). Unlike the previous examples, by setting the information related to the data encryption key ( KeyInfo) we have also included a tag KeyNamecontaining a name, a label (in our case asymmetricExample), which will then allow a quick identification of the part of the document to be decrypted.</p>
+<p>In general, the class KeyInfomay contain keys, names, certificates and other public information useful for key management.</p>
+<p>The remaining part of the code relating to the encryption does not present further news; as in the case of symmetrical key, the method doFinalbelonging to the class is used XMLCipher, in this case passing it as an element to be encrypted that which acts as a root.</p>
+<p>Below is the section concerning decryption; there are two methods of decryption, both based on a resolver, ie the internal class MyPrivateKeyResolver, extension of the class KeyResolverSpibelonging to the named package apache.xml.security, whose task is to identify the key included in the encrypted document starting from the associated label (in our case asymmetricExample) and to offer the method do Final the private key for decryption. In the first case, the class MyPrivateKeyResolveris instantiated, in the second the use is static.</p>
+<p>The decryption takes place in the method decryptDocumentwhich, as in the previous examples, uses the doFinalclass method for effective decryption XMLChiper. The difference compared to the previous cases is that before requesting the decryption we invoke the method registerInternalKeyResolverto acquire the resolver.</p>
+<p>Internal class MyPrivateKeyResolver:</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public static class MyPrivateKeyResolver extends KeyResolverSpi {<br />
+private static PrivateKey pk;<br />
+private static String pkName;<br />
+public boolean engineCanResolve(Element element, String BaseURI, StorageResolver storage) {<br />
+return false;<br />
+}<br />
+public PrivateKey engineLookupAndResolvePrivateKey(<br />
+Element element, String BaseURI, StorageResolver storage<br />
+) throws KeyResolverException {<br />
+if (Constants.SignatureSpecNS.equals(element.getNamespaceURI()) &amp;&amp;<br />
+Constants._TAG_KEYNAME.equals(element.getLocalName())) {<br />
+String keyName = element.getFirstChild().getNodeValue();<br />
+if (pkName.equals(keyName)) {<br />
+return pk;<br />
+}<br />
+}<br />
+return null;<br />
+}<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>Method decryptDocument:</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+private static void decryptDocument(Document docSource, KeyResolverSpi internalResolver, int i) throws Exception<br />
+{<br />
+Document document = (Document)docSource.cloneNode(true);<br />
+Element rootElement = document.getDocumentElement();<br />
+Element encryptedDataElement = (Element)rootElement.getFirstChild();<br />
+XMLCipher decryptCipher = XMLCipher.getInstance();<br />
+decryptCipher.init(XMLCipher.DECRYPT_MODE, null);<br />
+if (internalResolver != null) {<br />
+decryptCipher.registerInternalKeyResolver(internalResolver);<br />
+}<br />
+decryptCipher.doFinal(document, encryptedDataElement);<br />
+DomAndParserUtilities.outputDocToFile(document, &#8220;build/asymmetric/doc&#8221;+i+&#8221;.xml&#8221;);<br />
+}<br />
+&lt;/pre&gt;</p>
+<h2>Apache Sanctuary: XML signature</h2>
+<p>The XML signature allows the recipient of a message to check if the message he received was modified with respect to the message sent by the sender, while allowing the latter to authenticate.</p>
+<p>A digital signature provides an integrity check on some content, allowing, for example, to identify the change between a &#8216;Yes&#8217; and a &#8216;No&#8217;, adding zeros or changing anyone integer into another and so on.</p>
+<p>To do this, the first step is to create a hash of the message. A cryptographic hash takes an arbitrary flow of bytes and converts it to a value based on a prefixed number, known as a digest. A digest is, therefore, the result of a one-way process, it is computationally impossible to replicate the message from the hash, or find two different messages that produce the same digest.</p>
+<p>Summing up, starting from the message M, we create the digest H(M). Who you will receive the message will receive both Mthat H(M)and may get your own digest H’(M). If the two digests are the same, it is possible to say that what has been sent corresponds to what has been received.</p>
+<p>In practice, two approaches are applied. The first is to insert a shared key in the digest, which is to create H(S+M), so that the recipient of the message must use the shared key Sto get their own digest H’(S+M)and compare it with the received one. In this way, the problem moves on the security of the shared key S. A common way of proceeding is to use central authorities for distributing keys that are common for certain sessions.</p>
+<p>Another approach is instead based on the use of asymmetric key cryptography, such as RSA. Using RSA, the digest is generated H(M)and encrypted with the private key, obtaining the signature. The receiver M generates his own digest H’(M)and decrypts the signature using the public key. If the digest H(M)so produced and H’(M)are the same, the message Mis identical.</p>
+<p>It immediately becomes clear how the problem of the signature is closely linked to the problem of cryptography.</p>
+<p>In the example we show below, we will first proceed to generate an XML document with an attached digital signature. Then we will check that the document obtained is consistent with the attached signature.</p>
+<p>Here is an example of signing an XML document:</p>
+<p>CreateSignature main</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public static void main(String unused[]) throws Exception {<br />
+ElementProxy.setDefaultPrefix(Constants.SignatureSpecNS, &#8220;ds&#8221;);<br />
+//Caricamento del keystore<br />
+String keystoreType = &#8220;JKS&#8221;;<br />
+String keystoreFile = &#8220;samples/data/sig/keystore.jks&#8221;;<br />
+String keystorePass = &#8220;xmlsecurity&#8221;;<br />
+String privateKeyAlias = &#8220;test&#8221;;<br />
+String privateKeyPass = &#8220;xmlsecurity&#8221;;<br />
+String certificateAlias = &#8220;test&#8221;;<br />
+String signatureDoc = &#8220;build/signature/signature.xml&#8221;;<br />
+File signatureFile = new File(signatureDoc);<br />
+KeyStore ks = KeyStore.getInstance(keystoreType);<br />
+FileInputStream fis = new FileInputStream(keystoreFile);<br />
+ks.load(fis, keystorePass.toCharArray());<br />
+//Acquisizione della chiave privata per la firma<br />
+PrivateKey privateKey = (PrivateKey) ks.getKey(privateKeyAlias, privateKeyPass.toCharArray());<br />
+//Inizializzazione del documento XML<br />
+javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();<br />
+dbf.setNamespaceAware(true);<br />
+javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();<br />
+org.w3c.dom.Document doc = db.newDocument();<br />
+Element root = doc.createElementNS(&#8220;http://www.apache.org/ns/#app1&#8221;, &#8220;apache:RootElement&#8221;);<br />
+root.setAttributeNS(null, &#8220;Scope&#8221;, &#8220;SignatureTest&#8221;);<br />
+root.setAttributeNS(Constants.NamespaceSpecNS, &#8220;xmlns:foo&#8221;, &#8220;http://example.org/#foo&#8221;);<br />
+root.setAttributeNS(&#8220;http://example.org/#foo&#8221;, &#8220;foo:attr1&#8221;, &#8220;SigTest&#8221;);<br />
+root.setAttributeNS(Constants.NamespaceSpecNS, &#8220;xmlns:apache&#8221;, &#8220;http://www.apache.org/ns/#app1&#8221;);<br />
+doc.appendChild(root);<br />
+root.appendChild(doc.createTextNode(&#8220;Un semplice documento con firma\n&#8221;));<br />
+DomAndParserUtilities.outputDocToFile(doc, &#8220;build/signature/unsigDoc.xml&#8221;);<br />
+//BaseURI è l&#8217;URI da anteporre ai relativi URIs<br />
+String BaseURI = signatureFile.toURI().toURL().toString();<br />
+//Oggetto XML Signature creato a partire dal documento, BaseURI e algoritmo di firma (in questo caso DSA)<br />
+XMLSignature sig = new XMLSignature(doc, BaseURI, XMLSignature.ALGO_ID_SIGNATURE_DSA);<br />
+//Append dell&#8217;elemento che conterrà la firma alla radice del documento<br />
+//enveloped signature<br />
+root.appendChild(sig.getElement());<br />
+sig.getSignedInfo().addResourceResolver(<br />
+new org.apache.xml.security.samples.utils.resolver.OfflineResolver()<br />
+);<br />
+{<br />
+//Enveloped signature, Oggetto transforms<br />
+Transforms transforms = new Transforms(doc);<br />
+transforms.addTransform(Transforms.TRANSFORM_ENVELOPED_SIGNATURE);<br />
+transforms.addTransform(Transforms.TRANSFORM_C14N_WITH_COMMENTS);<br />
+sig.addDocument(&#8220;&#8221;, transforms, Constants.ALGO_ID_DIGEST_SHA1);<br />
+}<br />
+{<br />
+//URIs esterni (OfflineResolver): detached Reference. Firma mista<br />
+sig.addDocument(&#8220;http://www.w3.org/TR/xml-stylesheet&#8221;);<br />
+sig.addDocument(&#8220;http://www.nue.et-inf.uni-siegen.de/index.html&#8221;);<br />
+}<br />
+{<br />
+//Aggiunta delle informazioni riguardanti il certificato (e la chiave) e creazione della firma<br />
+X509Certificate cert = (X509Certificate) ks.getCertificate(certificateAlias);<br />
+sig.addKeyInfo(cert);<br />
+sig.addKeyInfo(cert.getPublicKey());<br />
+System.out.println(&#8220;Firma&#8230;&#8221;);<br />
+sig.sign(privateKey);<br />
+System.out.println(&#8220;&#8230;aggiunta&#8221;);<br />
+}<br />
+DomAndParserUtilities.outputDocToFile(doc, signatureDoc);<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>The first part consists of populating a class object KeyStorefrom the file keystore.jks. This class has the task of providing a container for cryptographic keys and certificates, with the items identified by means of aliases, as shown in the example.</p>
+<p>The XML document is then initialized. Note that the XML Signature requires namespace support, so the parser is prompted to provide such support ( setNamespaceAware(true)), as this does not happen by default. Before proceeding, the document not yet signed is written on file ( unsigDoc.xml) so that it can be compared later with the signed one.</p>
+<p>Now we come to the creation of the signature, it is based on the class XMLSignature, responsible for the creation and verification of the signature in Apache Sanctuary. In our example, the object is initialized starting from the document to be signed, from the destination URI and from the method used to sign. The signature is then postponed to the root element, creating an enveloped signature. This means that the signature will be part of the contents of the XML document as a child element, but this element is excluded from the calculation to get the digest, which can happen through an object Transform(as you can see in the example).</p>
+<p>There are two other ways: the first is to insert the entire document within the signature, the second is to keep a separate signature and document. However, a mixed approach is possible by providing a reference.</p>
+<p>In the main presented we find different approaches. The signature is part of the document and one is used transform to separate it from the document when the signature is calculated.</p>
+<p>Subsequently, two references are added to external documents (positioned in the folder samples and accessible by OfflineResolveradding as ResourceResolverper signature).</p>
+<p>The signature is added using an X.509 certificate to defend the public key. Through an X.509 certificate, we can associate a name with a public key. This can be done to remedy a possible attack. If a public key is replaced with another public key, you can replace the original application and obtain sensitive data. To prevent these attacks, you can use certificates signed by a certification authority that can confirm the integrity of a public key in a certificate. An X.509 certificate contains information on the subject of the certificate and on who issues the certificate. The certificate is then encoded in a standard format ( ASN.1 or Abstract Syntax Notation One) can be sent or received via a network.</p>
+<p>The certificate is created starting from the information contained in the Keystore. The certificate and the public key useful for decrypting the message are attached to the signature. At this point everything is ready for the signature, which takes place through the method sign of the class XMLSignature, passing as an argument the private key used to obtain the digest. Finally, the signed document is saved on file as done previously.</p>
+<p>Note that in addition to adding the certificate ( addKeyInfo(cert)), the public key ( addKeyInfo(cert.getPublicKey())) is added . This operation is redundant because we are already passing the certificate, but it is useful to try another combination of signature and verification, as we will see later.</p>
+<p>Looking at the generated file ( signature.xml), we will notice that three signatures (tags ds:DigestValue) have been created. The first signature, with annex Transform, is associated with the XML document created in the main. There are also two other signatures associated with external XML, the XML identified by the reference. In addition, there is information about the X.509 certificate and the public key, information that can be used during the verification of the signature.</p>
+<p>Example: verification of the signature</p>
+<p>In the verification, once the document is acquired, the first step consists in the identification of the signature, that is the element Signature. In this example, we use an XPath expression , which allows us to identify the node to be passed to the class instance object XMLSignature. As before, the class XMLCipherprovided the methods to encrypt and decrypt, so we now use the class XMLSignaturefor signature and verification.</p>
+<p>VerifySignature main</p>
+<p>&lt;pre class=&#8221;brush: php; html-script: true&#8221;&gt;<br />
+public static void main(String unused[]) {<br />
+String signatureFileName = &#8220;build/signature/signature.xml&#8221;;<br />
+try {<br />
+File f = new File(signatureFileName);<br />
+Document doc = DomAndParserUtilities.loadEncryptionDocument(&#8220;build/signature/signature.xml&#8221;);<br />
+//Individuazione e acquisizione firma<br />
+XPathFactory xpf = XPathFactory.newInstance();<br />
+XPath xpath = xpf.newXPath();<br />
+xpath.setNamespaceContext(new DSNamespaceContext());<br />
+String expression = &#8220;//ds:Signature[1]&#8221;;<br />
+Element sigElement = (Element) xpath.evaluate(expression, doc, XPathConstants.NODE);<br />
+XMLSignature signature = new XMLSignature(sigElement, f.toURI().toURL().toString());<br />
+signature.addResourceResolver(new OfflineResolver());<br />
+//Acquisizione informazioni dal documento<br />
+KeyInfo ki = signature.getKeyInfo();<br />
+if (ki != null) {<br />
+//Verifica tramite certificato<br />
+if (ki.containsX509Data()) {<br />
+System.out.println(&#8220;X509Data in KeyInfo!&#8221;);<br />
+}<br />
+X509Certificate cert = ki.getX509Certificate();<br />
+if (cert != null) {<br />
+System.out.println(&#8220;Firma XML: &#8221;<br />
++ (signature.checkSignatureValue(cert)<br />
+? &#8220;valida (Ok)!&#8221; : &#8220;invalida !!! (NOk)&#8221;));<br />
+} else {<br />
+//Verifica tramite chiave pubblica<br />
+System.out.println(&#8220;Certificato non trovato, verifica tramite chiave pubblica!&#8221;);<br />
+PublicKey pk = ki.getPublicKey();<br />
+if (pk != null) {<br />
+System.out.println(&#8220;Firma XML: &#8221;<br />
++ (signature.checkSignatureValue(pk)<br />
+? &#8220;valida (Ok)!&#8221; : &#8220;invalida !!! (NOk)&#8221;));<br />
+} else {<br />
+System.out.println(<br />
+&#8220;Chiave pubblica non trovata. Verifica della firma fallita!&#8221;);<br />
+}<br />
+}<br />
+} else {<br />
+System.out.println(&#8220;KeyInfo assente. Verifica della firma fallita!&#8221;);<br />
+}<br />
+} catch (Exception ex) {<br />
+ex.printStackTrace();<br />
+}<br />
+}<br />
+&lt;/pre&gt;</p>
+<p>Since we had added both the certificate (in our case the X509 certificate) and the public key during the signature phase, verification can be done in two ways. The information is retrieved from the information added to the signed document ( KeyInfo). Then follows the test (checkSignatureValue) which starts from the verification of the presence of a certificate. This is sufficient to establish the validity of the signed document, for which the process stops. By modifying the behavior of the class (for example by commenting on the certificate section in the verification or signature class) it will be possible to run the test using the public key, and you will see that the document passes the test without any problems even in this case. It should be noted that the verification of the signature takes place in a single step, without having to provide a separate behavior for the signature relating to the document and the signatures relating to the two referenced documents and without having to perform manipulations on the document to be verified.</p>
+<p>Conclusions</p>
+<p>In this article we started from the problems that led to the request of specific security frameworks in XML, we saw that the requests followed the definition of different modular standards to meet the different requests and we finally showed an overview of Apache Sanctuary , project aimed at enabling digital signature and cryptography of XML in Java.</p>
+<p>We have introduced the main topics, showing their variety and complexity. The individual aspects mentioned, for example the creation of keys or the management of certificates, deserve further investigation, but the purpose of the article was actually to see that the framework supports the various nuances connected to the security world.</p>
+<p>Thanks to these characteristics the use of the framework is widespread. As an example, some of the main open source users are reported: Apache WSS4J, Apache CXF API and Apache ServiceMix.</p>
+<p>An unknown factor to report concerns the scarcity of documentation. The project originated before 2000, nevertheless the material available on the Net is often lacking (for example in the Apache community site we find a laconic The documentation available here is not very huge ), therefore, for a deeper study, it may be necessary to study the examples made available in samples the project folder. If this is not enough, you can consult the folder src/testto get other examples.</p>
+<p>Finally, it must be said that none of the specifications of XML Security is fully realized and that both the W3C and Oasis are working hard to finalize the standards. In addition, security holes emerged from an implementation of XML Encryption identified from information obtained from error messages ( <a href="http://www.sigsac.org/ccs/CCS2011/techprogram.shtml#s12" target="_blank" rel="noopener">ACM Conference</a> ). XML security is, therefore, a process that is still ongoing and this may have repercussions on the implementation of the related standards, such as Apache Santuario.</p>
+        </div>
+
+
+        <footer>
+                        
+            <div class="td-post-source-tags">
+                                            </div>
+
+            <div class="td-post-sharing-bottom"><div class="td-post-sharing-classic"><iframe frameBorder="0" src="http://www.facebook.com/plugins/like.php?href=http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/&amp;layout=button_count&amp;show_faces=false&amp;width=105&amp;action=like&amp;colorscheme=light&amp;height=21" style="border:none; overflow:hidden; width:105px; height:21px; background-color:transparent;"></iframe></div><div id="td_social_sharing_article_bottom" class="td-post-sharing td-ps-bg td-ps-notext td-post-sharing-style1 "><div class="td-post-sharing-visible"><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-facebook" href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.macroprogramming.com%2Fapache-sanctuary-cryptography-and-xml-signature-in-java%2F">
+                                        <div class="td-social-but-icon"><i class="td-icon-facebook"></i></div>
+                                        <div class="td-social-but-text">Facebook</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-twitter" href="https://twitter.com/intent/tweet?text=Apache+Sanctuary%2C+cryptography+and+XML+signature+in+Java&url=http%3A%2F%2Fwww.macroprogramming.com%2Fapache-sanctuary-cryptography-and-xml-signature-in-java%2F&via=Macro+Programming">
+                                        <div class="td-social-but-icon"><i class="td-icon-twitter"></i></div>
+                                        <div class="td-social-but-text">Twitter</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-googleplus" href="https://plus.google.com/share?url=http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/">
+                                        <div class="td-social-but-icon"><i class="td-icon-googleplus"></i></div>
+                                        <div class="td-social-but-text">Google+</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-pinterest" href="https://pinterest.com/pin/create/button/?url=http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/&amp;media=http://www.macroprogramming.com/wp-content/uploads/2018/09/apache-sanctuary-cryptography-and-xml-signature-in-java.jpg&description=Apache+Sanctuary%2C+cryptography+and+XML+signature+in+Java">
+                                        <div class="td-social-but-icon"><i class="td-icon-pinterest"></i></div>
+                                        <div class="td-social-but-text">Pinterest</div>
+                                    </a><a class="td-social-sharing-button td-social-sharing-button-js td-social-network td-social-whatsapp" href="whatsapp://send?text=Apache Sanctuary, cryptography and XML signature in Java %0A%0A http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/">
+                                        <div class="td-social-but-icon"><i class="td-icon-whatsapp"></i></div>
+                                        <div class="td-social-but-text">WhatsApp</div>
+                                    </a></div><div class="td-social-sharing-hidden"><ul class="td-pulldown-filter-list"></ul><a class="td-social-sharing-button td-social-handler td-social-expand-tabs" href="#" data-block-uid="td_social_sharing_article_bottom">
+                                    <div class="td-social-but-icon"><i class="td-icon-plus td-social-expand-tabs-icon"></i></div>
+                                </a></div></div></div>            <div class="td-block-row td-post-next-prev"><div class="td-block-span6 td-post-prev-post"><div class="td-post-next-prev-content"><span>Previous article</span><a href="http://www.macroprogramming.com/jruby-java-and-ruby-together/">JRuby: Java and Ruby together</a></div></div><div class="td-next-prev-separator"></div><div class="td-block-span6 td-post-next-post"><div class="td-post-next-prev-content"><span>Next article</span><a href="http://www.macroprogramming.com/open-source-xml-optimization-exificient/">Open source XML optimization: EXIficient</a></div></div></div>            <div class="author-box-wrap"><a href="http://www.macroprogramming.com/author/yaser-2-2/"><img alt='' src='http://0.gravatar.com/avatar/3bb159cb0552447388975ce6107aa0fc?s=96&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3bb159cb0552447388975ce6107aa0fc?s=192&#038;d=mm&#038;r=g 2x' class='avatar avatar-96 photo' height='96' width='96' /></a><div class="desc"><div class="td-author-name vcard author"><span class="fn"><a href="http://www.macroprogramming.com/author/yaser-2-2/">Admin</a></span></div><div class="td-author-description"></div><div class="td-author-social"></div><div class="clearfix"></div></div></div>	        <span class="td-page-meta" itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Admin"></span><meta itemprop="datePublished" content="2018-09-16T19:48:30+00:00"><meta itemprop="dateModified" content="2018-09-16T20:22:33+00:00"><meta itemscope itemprop="mainEntityOfPage" itemType="https://schema.org/WebPage" itemid="http://www.macroprogramming.com/apache-sanctuary-cryptography-and-xml-signature-in-java/"/><span class="td-page-meta" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><span class="td-page-meta" itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="http://www.macroprogramming.com/wp-content/uploads/2018/08/logo-01-272-x-90.png"></span><meta itemprop="name" content="Macro Programming"></span><meta itemprop="headline " content="Apache Sanctuary, cryptography and XML signature in Java"><span class="td-page-meta" itemprop="image" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="http://www.macroprogramming.com/wp-content/uploads/2018/09/apache-sanctuary-cryptography-and-xml-signature-in-java.jpg"><meta itemprop="width" content="640"><meta itemprop="height" content="426"></span>        </footer>
+
+    </article> <!-- /.post -->
+
+    <div class="td_block_wrap td_block_related_posts td_uid_3_5e5136b52dc1a_rand td_with_ajax_pagination td-pb-border-top td_block_template_1"  data-td-block-uid="td_uid_3_5e5136b52dc1a" ><script>var block_td_uid_3_5e5136b52dc1a = new tdBlock();
+block_td_uid_3_5e5136b52dc1a.id = "td_uid_3_5e5136b52dc1a";
+block_td_uid_3_5e5136b52dc1a.atts = '{"limit":6,"ajax_pagination":"next_prev","live_filter":"cur_post_same_categories","td_ajax_filter_type":"td_custom_related","class":"td_uid_3_5e5136b52dc1a_rand","td_column_number":3,"live_filter_cur_post_id":659,"live_filter_cur_post_author":"1","block_template_id":"","header_color":"","ajax_pagination_infinite_stop":"","offset":"","td_ajax_preloading":"","td_filter_default_txt":"","td_ajax_filter_ids":"","el_class":"","color_preset":"","border_top":"","css":"","tdc_css":"","tdc_css_class":"td_uid_3_5e5136b52dc1a_rand","tdc_css_class_style":"td_uid_3_5e5136b52dc1a_rand_style"}';
+block_td_uid_3_5e5136b52dc1a.td_column_number = "3";
+block_td_uid_3_5e5136b52dc1a.block_type = "td_block_related_posts";
+block_td_uid_3_5e5136b52dc1a.post_count = "6";
+block_td_uid_3_5e5136b52dc1a.found_posts = "65";
+block_td_uid_3_5e5136b52dc1a.header_color = "";
+block_td_uid_3_5e5136b52dc1a.ajax_pagination_infinite_stop = "";
+block_td_uid_3_5e5136b52dc1a.max_num_pages = "11";
+tdBlocksArray.push(block_td_uid_3_5e5136b52dc1a);
+</script><h4 class="td-related-title td-block-title"><a id="td_uid_4_5e5136b530a10" class="td-related-left td-cur-simple-item" data-td_filter_value="" data-td_block_id="td_uid_3_5e5136b52dc1a" href="#">RELATED ARTICLES</a><a id="td_uid_5_5e5136b530a4b" class="td-related-right" data-td_filter_value="td_related_more_from_author" data-td_block_id="td_uid_3_5e5136b52dc1a" href="#">MORE FROM AUTHOR</a></h4><div id=td_uid_3_5e5136b52dc1a class="td_block_inner">
+
+	<div class="td-related-row">
+
+	<div class="td-related-span4">
+
+        <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/search-contract-in-windows-8/" rel="bookmark" class="td-image-wrap" title="Search Contract in Windows 8"><img width="218" height="150" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/12/search-contract-in-windows-8-218x150.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/12/search-contract-in-windows-8-218x150.jpg 218w, http://www.macroprogramming.com/wp-content/uploads/2018/12/search-contract-in-windows-8-100x70.jpg 100w" sizes="(max-width: 218px) 100vw, 218px" alt="Search Contract in Windows 8" title="Search Contract in Windows 8"/></a></div>                <a href="http://www.macroprogramming.com/category/development/net/" class="td-post-category">.Net</a>            </div>
+            <div class="item-details">
+                <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/search-contract-in-windows-8/" rel="bookmark" title="Search Contract in Windows 8">Search Contract in Windows 8</a></h3>            </div>
+        </div>
+        
+	</div> <!-- ./td-related-span4 -->
+
+	<div class="td-related-span4">
+
+        <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/create-a-pdf-version-of-wordpress-articles-with-mpdf/" rel="bookmark" class="td-image-wrap" title="Create a PDF version of WordPress articles with mPDF"><img width="218" height="150" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/12/create-a-pdf-version-of-wordpress-articles-with-mpdf-218x150.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/12/create-a-pdf-version-of-wordpress-articles-with-mpdf-218x150.jpg 218w, http://www.macroprogramming.com/wp-content/uploads/2018/12/create-a-pdf-version-of-wordpress-articles-with-mpdf-100x70.jpg 100w" sizes="(max-width: 218px) 100vw, 218px" alt="Create a PDF version of WordPress articles with mPDF" title="Create a PDF version of WordPress articles with mPDF"/></a></div>                <a href="http://www.macroprogramming.com/category/development/cms/articles-cms/" class="td-post-category">Articles</a>            </div>
+            <div class="item-details">
+                <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/create-a-pdf-version-of-wordpress-articles-with-mpdf/" rel="bookmark" title="Create a PDF version of WordPress articles with mPDF">Create a PDF version of WordPress articles with mPDF</a></h3>            </div>
+        </div>
+        
+	</div> <!-- ./td-related-span4 -->
+
+	<div class="td-related-span4">
+
+        <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/wordpress-stuck-in-maintenance-mode-what-to-do/" rel="bookmark" class="td-image-wrap" title="WordPress stuck in maintenance mode: what to do?"><img width="218" height="150" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/12/002-1-218x150.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/12/002-1-218x150.jpg 218w, http://www.macroprogramming.com/wp-content/uploads/2018/12/002-1-100x70.jpg 100w" sizes="(max-width: 218px) 100vw, 218px" alt="WordPress stuck in maintenance mode: what to do" title="WordPress stuck in maintenance mode: what to do?"/></a></div>                <a href="http://www.macroprogramming.com/category/development/cms/articles-cms/" class="td-post-category">Articles</a>            </div>
+            <div class="item-details">
+                <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/wordpress-stuck-in-maintenance-mode-what-to-do/" rel="bookmark" title="WordPress stuck in maintenance mode: what to do?">WordPress stuck in maintenance mode: what to do?</a></h3>            </div>
+        </div>
+        
+	</div> <!-- ./td-related-span4 --></div><!--./row-fluid-->
+
+	<div class="td-related-row">
+
+	<div class="td-related-span4">
+
+        <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/wordpress-5-0-i18n-support-for-javascript/" rel="bookmark" class="td-image-wrap" title="WordPress 5.0: i18n support for JavaScript"><img width="218" height="150" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/12/wordpress-5-0-i18n-support-for-javascript-218x150.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/12/wordpress-5-0-i18n-support-for-javascript-218x150.jpg 218w, http://www.macroprogramming.com/wp-content/uploads/2018/12/wordpress-5-0-i18n-support-for-javascript-100x70.jpg 100w" sizes="(max-width: 218px) 100vw, 218px" alt="WordPress 5.0: i18n support for JavaScript" title="WordPress 5.0: i18n support for JavaScript"/></a></div>                <a href="http://www.macroprogramming.com/category/development/cms/articles-cms/" class="td-post-category">Articles</a>            </div>
+            <div class="item-details">
+                <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/wordpress-5-0-i18n-support-for-javascript/" rel="bookmark" title="WordPress 5.0: i18n support for JavaScript">WordPress 5.0: i18n support for JavaScript</a></h3>            </div>
+        </div>
+        
+	</div> <!-- ./td-related-span4 -->
+
+	<div class="td-related-span4">
+
+        <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/wordpress-solve-database-connection-problems/" rel="bookmark" class="td-image-wrap" title="WordPress: solve database connection problems"><img width="218" height="150" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/12/wordpress-solve-database-connection-problems-218x150.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/12/wordpress-solve-database-connection-problems-218x150.jpg 218w, http://www.macroprogramming.com/wp-content/uploads/2018/12/wordpress-solve-database-connection-problems-100x70.jpg 100w" sizes="(max-width: 218px) 100vw, 218px" alt="WordPress: solve database connection problems" title="WordPress: solve database connection problems"/></a></div>                <a href="http://www.macroprogramming.com/category/development/cms/articles-cms/" class="td-post-category">Articles</a>            </div>
+            <div class="item-details">
+                <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/wordpress-solve-database-connection-problems/" rel="bookmark" title="WordPress: solve database connection problems">WordPress: solve database connection problems</a></h3>            </div>
+        </div>
+        
+	</div> <!-- ./td-related-span4 -->
+
+	<div class="td-related-span4">
+
+        <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/java-debugging-remote-applications/" rel="bookmark" class="td-image-wrap" title="Java: debugging remote applications"><img width="218" height="150" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/11/java-debugging-remote-applications-218x150.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/11/java-debugging-remote-applications-218x150.jpg 218w, http://www.macroprogramming.com/wp-content/uploads/2018/11/java-debugging-remote-applications-100x70.jpg 100w" sizes="(max-width: 218px) 100vw, 218px" alt="Java: debugging remote applications" title="Java: debugging remote applications"/></a></div>                <a href="http://www.macroprogramming.com/category/development/java/articles-java/" class="td-post-category">Articles</a>            </div>
+            <div class="item-details">
+                <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/java-debugging-remote-applications/" rel="bookmark" title="Java: debugging remote applications">Java: debugging remote applications</a></h3>            </div>
+        </div>
+        
+	</div> <!-- ./td-related-span4 --></div><!--./row-fluid--></div><div class="td-next-prev-wrap"><a href="#" class="td-ajax-prev-page ajax-page-disabled" id="prev-page-td_uid_3_5e5136b52dc1a" data-td_block_id="td_uid_3_5e5136b52dc1a"><i class="td-icon-font td-icon-menu-left"></i></a><a href="#"  class="td-ajax-next-page" id="next-page-td_uid_3_5e5136b52dc1a" data-td_block_id="td_uid_3_5e5136b52dc1a"><i class="td-icon-font td-icon-menu-right"></i></a></div></div> <!-- ./block -->
+	<div class="comments" id="comments">
+        	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">LEAVE A REPLY <small><a rel="nofollow" id="cancel-comment-reply-link" href="/apache-sanctuary-cryptography-and-xml-signature-in-java/#respond" style="display:none;">Cancel reply</a></small></h3>			<form action="http://www.macroprogramming.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+				<div class="clearfix"></div>
+				<div class="comment-form-input-wrap td-form-comment">
+					<textarea placeholder="Comment:" id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+					<div class="td-warning-comment">Please enter your comment!</div>
+				</div>
+		        <div class="comment-form-input-wrap td-form-author">
+			            <input class="" id="author" name="author" placeholder="Name:*" type="text" value="" size="30"  aria-required='true' />
+			            <div class="td-warning-author">Please enter your name here</div>
+			         </div>
+<div class="comment-form-input-wrap td-form-email">
+			            <input class="" id="email" name="email" placeholder="Email:*" type="text" value="" size="30"  aria-required='true' />
+			            <div class="td-warning-email-error">You have entered an incorrect email address!</div>
+			            <div class="td-warning-email">Please enter your email address here</div>
+			         </div>
+<div class="comment-form-input-wrap td-form-url">
+			            <input class="" id="url" name="url" placeholder="Website:" type="text" value="" size="30" />
+                     </div>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /><label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='659' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="10d0908f37" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="9"/></p>			</form>
+			</div><!-- #respond -->
+	    </div> <!-- /.content -->
+                            </div>
+                        </div>
+                        <div class="td-pb-span4 td-main-sidebar" role="complementary">
+                            <div class="td-ss-main-sidebar">
+                                <div class="td-a-rec td-a-rec-id-sidebar  td_uid_6_5e5136b535f61_rand td_block_template_1"><span class="td-adspot-title">- Advertisement -</span><!--<div class="td-all-devices"><a href="#" target="_blank"><img src="http://www.macroprogramming.com/wp-content/uploads/2018/08/rec300.jpg"/></a></div>--></div><div class="td_block_wrap td_block_1 td_block_widget td_uid_7_5e5136b53672f_rand td-pb-border-top td_block_template_1 td-column-1"  data-td-block-uid="td_uid_7_5e5136b53672f" ><script>var block_td_uid_7_5e5136b53672f = new tdBlock();
+block_td_uid_7_5e5136b53672f.id = "td_uid_7_5e5136b53672f";
+block_td_uid_7_5e5136b53672f.atts = '{"sort":"random_posts","custom_title":"APLICATIONS","limit":"4","header_color":"","class":"td_block_widget td_uid_7_5e5136b53672f_rand","separator":"","custom_url":"","block_template_id":"","m4_tl":"","m4_el":"","m6_tl":"","post_ids":"","category_id":"","category_ids":"","tag_slug":"","autors_id":"","installed_post_types":"","offset":"","el_class":"","td_ajax_filter_type":"","td_ajax_filter_ids":"","td_filter_default_txt":"All","td_ajax_preloading":"","f_header_font_header":"","f_header_font_title":"Block header","f_header_font_settings":"","f_header_font_family":"","f_header_font_size":"","f_header_font_line_height":"","f_header_font_style":"","f_header_font_weight":"","f_header_font_transform":"","f_header_font_spacing":"","f_header_":"","f_ajax_font_title":"Ajax categories","f_ajax_font_settings":"","f_ajax_font_family":"","f_ajax_font_size":"","f_ajax_font_line_height":"","f_ajax_font_style":"","f_ajax_font_weight":"","f_ajax_font_transform":"","f_ajax_font_spacing":"","f_ajax_":"","f_more_font_title":"Load more button","f_more_font_settings":"","f_more_font_family":"","f_more_font_size":"","f_more_font_line_height":"","f_more_font_style":"","f_more_font_weight":"","f_more_font_transform":"","f_more_font_spacing":"","f_more_":"","m4f_title_font_header":"","m4f_title_font_title":"Article title","m4f_title_font_settings":"","m4f_title_font_family":"","m4f_title_font_size":"","m4f_title_font_line_height":"","m4f_title_font_style":"","m4f_title_font_weight":"","m4f_title_font_transform":"","m4f_title_font_spacing":"","m4f_title_":"","m4f_cat_font_title":"Article category tag","m4f_cat_font_settings":"","m4f_cat_font_family":"","m4f_cat_font_size":"","m4f_cat_font_line_height":"","m4f_cat_font_style":"","m4f_cat_font_weight":"","m4f_cat_font_transform":"","m4f_cat_font_spacing":"","m4f_cat_":"","m4f_meta_font_title":"Article meta info","m4f_meta_font_settings":"","m4f_meta_font_family":"","m4f_meta_font_size":"","m4f_meta_font_line_height":"","m4f_meta_font_style":"","m4f_meta_font_weight":"","m4f_meta_font_transform":"","m4f_meta_font_spacing":"","m4f_meta_":"","m4f_ex_font_title":"Article excerpt","m4f_ex_font_settings":"","m4f_ex_font_family":"","m4f_ex_font_size":"","m4f_ex_font_line_height":"","m4f_ex_font_style":"","m4f_ex_font_weight":"","m4f_ex_font_transform":"","m4f_ex_font_spacing":"","m4f_ex_":"","m6f_title_font_header":"","m6f_title_font_title":"Article title","m6f_title_font_settings":"","m6f_title_font_family":"","m6f_title_font_size":"","m6f_title_font_line_height":"","m6f_title_font_style":"","m6f_title_font_weight":"","m6f_title_font_transform":"","m6f_title_font_spacing":"","m6f_title_":"","m6f_cat_font_title":"Article category tag","m6f_cat_font_settings":"","m6f_cat_font_family":"","m6f_cat_font_size":"","m6f_cat_font_line_height":"","m6f_cat_font_style":"","m6f_cat_font_weight":"","m6f_cat_font_transform":"","m6f_cat_font_spacing":"","m6f_cat_":"","m6f_meta_font_title":"Article meta info","m6f_meta_font_settings":"","m6f_meta_font_family":"","m6f_meta_font_size":"","m6f_meta_font_line_height":"","m6f_meta_font_style":"","m6f_meta_font_weight":"","m6f_meta_font_transform":"","m6f_meta_font_spacing":"","m6f_meta_":"","ajax_pagination":"","ajax_pagination_infinite_stop":"","css":"","tdc_css":"","td_column_number":1,"color_preset":"","border_top":"","tdc_css_class":"td_uid_7_5e5136b53672f_rand","tdc_css_class_style":"td_uid_7_5e5136b53672f_rand_style"}';
+block_td_uid_7_5e5136b53672f.td_column_number = "1";
+block_td_uid_7_5e5136b53672f.block_type = "td_block_1";
+block_td_uid_7_5e5136b53672f.post_count = "4";
+block_td_uid_7_5e5136b53672f.found_posts = "92";
+block_td_uid_7_5e5136b53672f.header_color = "";
+block_td_uid_7_5e5136b53672f.ajax_pagination_infinite_stop = "";
+block_td_uid_7_5e5136b53672f.max_num_pages = "23";
+tdBlocksArray.push(block_td_uid_7_5e5136b53672f);
+</script><div class="td-block-title-wrap"><h4 class="block-title td-block-title"><span class="td-pulldown-size">APLICATIONS</span></h4></div><div id=td_uid_7_5e5136b53672f class="td_block_inner">
+
+	<div class="td-block-span12">
+
+        <div class="td_module_4 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/wordpress-stuck-in-maintenance-mode-what-to-do/" rel="bookmark" class="td-image-wrap" title="WordPress stuck in maintenance mode: what to do?"><img width="324" height="235" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/12/002-1-324x235.jpg" alt="WordPress stuck in maintenance mode: what to do" title="WordPress stuck in maintenance mode: what to do?"/></a></div>                <a href="http://www.macroprogramming.com/category/development/cms/articles-cms/" class="td-post-category">Articles</a>            </div>
+
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/wordpress-stuck-in-maintenance-mode-what-to-do/" rel="bookmark" title="WordPress stuck in maintenance mode: what to do?">WordPress stuck in maintenance mode: what to do?</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="http://www.macroprogramming.com/author/yaser-2-2/">Admin</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2018-12-02T19:42:26+00:00" >December 2, 2018</time></span>                <div class="td-module-comments"><a href="http://www.macroprogramming.com/wordpress-stuck-in-maintenance-mode-what-to-do/#respond">0</a></div>            </div>
+
+            <div class="td-excerpt">
+                Let&#039;s learn how to fix WordPress blocking in maintenance mode when it involves updates, themes or plugins.
+
+The success of WordPress is unquestionably linked to...            </div>
+
+            
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="http://www.macroprogramming.com/form-with-html5-the-new-input-elements/" rel="bookmark" class="td-image-wrap" title="Form with HTML5: the new input elements"><img width="100" height="70" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/09/form-with-html5-the-new-input-elements-100x70.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/09/form-with-html5-the-new-input-elements-100x70.jpg 100w, http://www.macroprogramming.com/wp-content/uploads/2018/09/form-with-html5-the-new-input-elements-218x150.jpg 218w" sizes="(max-width: 100px) 100vw, 100px" alt="Form with HTML5: the new input elements" title="Form with HTML5: the new input elements"/></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/form-with-html5-the-new-input-elements/" rel="bookmark" title="Form with HTML5: the new input elements">Form with HTML5: the new input elements</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2018-09-21T20:45:30+00:00" >September 21, 2018</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="http://www.macroprogramming.com/drupal-8-the-news/" rel="bookmark" class="td-image-wrap" title="Drupal 8, the news"><img width="100" height="70" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/08/drupal-8-the-news-100x70.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/08/drupal-8-the-news-100x70.jpg 100w, http://www.macroprogramming.com/wp-content/uploads/2018/08/drupal-8-the-news-218x150.jpg 218w" sizes="(max-width: 100px) 100vw, 100px" alt="Drupal 8, the news" title="Drupal 8, the news"/></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/drupal-8-the-news/" rel="bookmark" title="Drupal 8, the news">Drupal 8, the news</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2018-08-29T20:29:21+00:00" >August 29, 2018</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="http://www.macroprogramming.com/introduction-to-the-webshare-api/" rel="bookmark" class="td-image-wrap" title="Introduction to the WebShare API"><img width="100" height="70" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/08/pexels-photo-607812-100x70.jpeg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/08/pexels-photo-607812-100x70.jpeg 100w, http://www.macroprogramming.com/wp-content/uploads/2018/08/pexels-photo-607812-218x150.jpeg 218w" sizes="(max-width: 100px) 100vw, 100px" alt="Introduction to the WebShare API" title="Introduction to the WebShare API"/></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/introduction-to-the-webshare-api/" rel="bookmark" title="Introduction to the WebShare API">Introduction to the WebShare API</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2018-08-21T20:31:31+00:00" >August 21, 2018</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 --></div></div> <!-- ./block --><div class="td_block_wrap td_block_15 td_block_widget td_uid_8_5e5136b53d74e_rand td_with_ajax_pagination td-pb-border-top td_block_template_1 td-column-1 td_block_padding"  data-td-block-uid="td_uid_8_5e5136b53d74e" ><script>var block_td_uid_8_5e5136b53d74e = new tdBlock();
+block_td_uid_8_5e5136b53d74e.id = "td_uid_8_5e5136b53d74e";
+block_td_uid_8_5e5136b53d74e.atts = '{"sort":"random_posts","custom_title":"HOT NEWS","limit":"4","header_color":"","ajax_pagination":"next_prev","class":"td_block_widget td_uid_8_5e5136b53d74e_rand","separator":"","custom_url":"","block_template_id":"","mx4_tl":"","post_ids":"","category_id":"","category_ids":"","tag_slug":"","autors_id":"","installed_post_types":"","offset":"","el_class":"","td_ajax_filter_type":"","td_ajax_filter_ids":"","td_filter_default_txt":"All","td_ajax_preloading":"","f_header_font_header":"","f_header_font_title":"Block header","f_header_font_settings":"","f_header_font_family":"","f_header_font_size":"","f_header_font_line_height":"","f_header_font_style":"","f_header_font_weight":"","f_header_font_transform":"","f_header_font_spacing":"","f_header_":"","f_ajax_font_title":"Ajax categories","f_ajax_font_settings":"","f_ajax_font_family":"","f_ajax_font_size":"","f_ajax_font_line_height":"","f_ajax_font_style":"","f_ajax_font_weight":"","f_ajax_font_transform":"","f_ajax_font_spacing":"","f_ajax_":"","f_more_font_title":"Load more button","f_more_font_settings":"","f_more_font_family":"","f_more_font_size":"","f_more_font_line_height":"","f_more_font_style":"","f_more_font_weight":"","f_more_font_transform":"","f_more_font_spacing":"","f_more_":"","mx4f_title_font_header":"","mx4f_title_font_title":"Article title","mx4f_title_font_settings":"","mx4f_title_font_family":"","mx4f_title_font_size":"","mx4f_title_font_line_height":"","mx4f_title_font_style":"","mx4f_title_font_weight":"","mx4f_title_font_transform":"","mx4f_title_font_spacing":"","mx4f_title_":"","mx4f_cat_font_title":"Article category tag","mx4f_cat_font_settings":"","mx4f_cat_font_family":"","mx4f_cat_font_size":"","mx4f_cat_font_line_height":"","mx4f_cat_font_style":"","mx4f_cat_font_weight":"","mx4f_cat_font_transform":"","mx4f_cat_font_spacing":"","mx4f_cat_":"","ajax_pagination_infinite_stop":"","css":"","tdc_css":"","td_column_number":1,"color_preset":"","border_top":"","tdc_css_class":"td_uid_8_5e5136b53d74e_rand","tdc_css_class_style":"td_uid_8_5e5136b53d74e_rand_style"}';
+block_td_uid_8_5e5136b53d74e.td_column_number = "1";
+block_td_uid_8_5e5136b53d74e.block_type = "td_block_15";
+block_td_uid_8_5e5136b53d74e.post_count = "4";
+block_td_uid_8_5e5136b53d74e.found_posts = "92";
+block_td_uid_8_5e5136b53d74e.header_color = "";
+block_td_uid_8_5e5136b53d74e.ajax_pagination_infinite_stop = "";
+block_td_uid_8_5e5136b53d74e.max_num_pages = "23";
+tdBlocksArray.push(block_td_uid_8_5e5136b53d74e);
+</script><div class="td-block-title-wrap"><h4 class="block-title td-block-title"><span class="td-pulldown-size">HOT NEWS</span></h4></div><div id=td_uid_8_5e5136b53d74e class="td_block_inner td-column-1"><div class="td-cust-row">
+
+	<div class="td-block-span12">
+
+        <div class="td_module_mx4 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/introduction-to-rack/" rel="bookmark" class="td-image-wrap" title="Introduction to Rack"><img width="218" height="150" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/09/introduction-to-rack-218x150.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/09/introduction-to-rack-218x150.jpg 218w, http://www.macroprogramming.com/wp-content/uploads/2018/09/introduction-to-rack-100x70.jpg 100w" sizes="(max-width: 218px) 100vw, 218px" alt="Introduction to Rack" title="Introduction to Rack"/></a></div>                <a href="http://www.macroprogramming.com/category/development/ruby/articles-ruby/" class="td-post-category">Articles</a>            </div>
+
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/introduction-to-rack/" rel="bookmark" title="Introduction to Rack">Introduction to Rack</a></h3>
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_mx4 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/open-source-xml-optimization-exificient/" rel="bookmark" class="td-image-wrap" title="Open source XML optimization: EXIficient"><img width="218" height="150" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/09/open-source-xml-optimization-exificient-218x150.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/09/open-source-xml-optimization-exificient-218x150.jpg 218w, http://www.macroprogramming.com/wp-content/uploads/2018/09/open-source-xml-optimization-exificient-100x70.jpg 100w" sizes="(max-width: 218px) 100vw, 218px" alt="Open source XML optimization: EXIficient" title="Open source XML optimization: EXIficient"/></a></div>                <a href="http://www.macroprogramming.com/category/development/xml/articles-xml/" class="td-post-category">Articles</a>            </div>
+
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/open-source-xml-optimization-exificient/" rel="bookmark" title="Open source XML optimization: EXIficient">Open source XML optimization: EXIficient</a></h3>
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 --></div><div class="td-cust-row">
+
+	<div class="td-block-span12">
+
+        <div class="td_module_mx4 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="http://www.macroprogramming.com/introduction-to-the-webshare-api/" rel="bookmark" class="td-image-wrap" title="Introduction to the WebShare API"><img width="218" height="150" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/08/pexels-photo-607812-218x150.jpeg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/08/pexels-photo-607812-218x150.jpeg 218w, http://www.macroprogramming.com/wp-content/uploads/2018/08/pexels-photo-607812-100x70.jpeg 100w" sizes="(max-width: 218px) 100vw, 218px" alt="Introduction to the WebShare API" title="Introduction to the WebShare API"/></a></div>                <a href="http://www.macroprogramming.com/category/development/javascript/articles-javascript/" class="td-post-category">Articles</a>            </div>
+
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/introduction-to-the-webshare-api/" rel="bookmark" title="Introduction to the WebShare API">Introduction to the WebShare API</a></h3>
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_mx4 td_module_wrap td-animation-stack td_module_no_thumb">
+            <div class="td-module-image">
+                                <a href="http://www.macroprogramming.com/category/development/ruby/articles-ruby/" class="td-post-category">Articles</a>            </div>
+
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/the-wonderful-news-of-rails-3/" rel="bookmark" title="The wonderful news of Rails 3">The wonderful news of Rails 3</a></h3>
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 --></div></div><div class="td-next-prev-wrap"><a href="#" class="td-ajax-prev-page ajax-page-disabled" id="prev-page-td_uid_8_5e5136b53d74e" data-td_block_id="td_uid_8_5e5136b53d74e"><i class="td-icon-font td-icon-menu-left"></i></a><a href="#"  class="td-ajax-next-page" id="next-page-td_uid_8_5e5136b53d74e" data-td_block_id="td_uid_8_5e5136b53d74e"><i class="td-icon-font td-icon-menu-right"></i></a></div></div> <!-- ./block --><div class="clearfix"></div>                            </div>
+                        </div>
+                            </div> <!-- /.td-pb-row -->
+    </div> <!-- /.td-container -->
+</div> <!-- /.td-main-content-wrap -->
+
+<!-- Instagram -->
+
+
+
+
+	<!-- Footer -->
+	<div class="td-footer-wrapper td-container-wrap td-footer-template-2 ">
+    <div class="td-container">
+
+	    <div class="td-pb-row">
+		    <div class="td-pb-span12">
+			    		    </div>
+	    </div>
+
+        <div class="td-pb-row">
+
+            <div class="td-pb-span4">
+                <div class="td-footer-info"><div class="footer-logo-wrap"><a href="http://www.macroprogramming.com/"><img class="td-retina-data" src="http://www.macroprogramming.com/wp-content/uploads/2018/08/footer-logo.png" data-retina="http://www.macroprogramming.com/wp-content/uploads/2018/08/footer-logo.png" alt="macro programming" title="macro programming" width="231" /></a></div><div class="footer-text-wrap"></div><div class="footer-social-wrap td-social-style-2"></div></div>                            </div>
+
+            <div class="td-pb-span4">
+                <div class="td_block_wrap td_block_7 td_uid_10_5e5136b5432e1_rand td-pb-border-top td_block_template_1 td-column-1 td_block_padding"  data-td-block-uid="td_uid_10_5e5136b5432e1" ><script>var block_td_uid_10_5e5136b5432e1 = new tdBlock();
+block_td_uid_10_5e5136b5432e1.id = "td_uid_10_5e5136b5432e1";
+block_td_uid_10_5e5136b5432e1.atts = '{"custom_title":"POPULAR POSTS","limit":3,"sort":"popular","separator":"","custom_url":"","block_template_id":"","m6_tl":"","post_ids":"","category_id":"","category_ids":"","tag_slug":"","autors_id":"","installed_post_types":"","offset":"","el_class":"","td_ajax_filter_type":"","td_ajax_filter_ids":"","td_filter_default_txt":"All","td_ajax_preloading":"","f_header_font_header":"","f_header_font_title":"Block header","f_header_font_settings":"","f_header_font_family":"","f_header_font_size":"","f_header_font_line_height":"","f_header_font_style":"","f_header_font_weight":"","f_header_font_transform":"","f_header_font_spacing":"","f_header_":"","f_ajax_font_title":"Ajax categories","f_ajax_font_settings":"","f_ajax_font_family":"","f_ajax_font_size":"","f_ajax_font_line_height":"","f_ajax_font_style":"","f_ajax_font_weight":"","f_ajax_font_transform":"","f_ajax_font_spacing":"","f_ajax_":"","f_more_font_title":"Load more button","f_more_font_settings":"","f_more_font_family":"","f_more_font_size":"","f_more_font_line_height":"","f_more_font_style":"","f_more_font_weight":"","f_more_font_transform":"","f_more_font_spacing":"","f_more_":"","m6f_title_font_header":"","m6f_title_font_title":"Article title","m6f_title_font_settings":"","m6f_title_font_family":"","m6f_title_font_size":"","m6f_title_font_line_height":"","m6f_title_font_style":"","m6f_title_font_weight":"","m6f_title_font_transform":"","m6f_title_font_spacing":"","m6f_title_":"","m6f_cat_font_title":"Article category tag","m6f_cat_font_settings":"","m6f_cat_font_family":"","m6f_cat_font_size":"","m6f_cat_font_line_height":"","m6f_cat_font_style":"","m6f_cat_font_weight":"","m6f_cat_font_transform":"","m6f_cat_font_spacing":"","m6f_cat_":"","m6f_meta_font_title":"Article meta info","m6f_meta_font_settings":"","m6f_meta_font_family":"","m6f_meta_font_size":"","m6f_meta_font_line_height":"","m6f_meta_font_style":"","m6f_meta_font_weight":"","m6f_meta_font_transform":"","m6f_meta_font_spacing":"","m6f_meta_":"","ajax_pagination":"","ajax_pagination_infinite_stop":"","css":"","tdc_css":"","td_column_number":1,"header_color":"","color_preset":"","border_top":"","class":"td_uid_10_5e5136b5432e1_rand","tdc_css_class":"td_uid_10_5e5136b5432e1_rand","tdc_css_class_style":"td_uid_10_5e5136b5432e1_rand_style"}';
+block_td_uid_10_5e5136b5432e1.td_column_number = "1";
+block_td_uid_10_5e5136b5432e1.block_type = "td_block_7";
+block_td_uid_10_5e5136b5432e1.post_count = "3";
+block_td_uid_10_5e5136b5432e1.found_posts = "92";
+block_td_uid_10_5e5136b5432e1.header_color = "";
+block_td_uid_10_5e5136b5432e1.ajax_pagination_infinite_stop = "";
+block_td_uid_10_5e5136b5432e1.max_num_pages = "31";
+tdBlocksArray.push(block_td_uid_10_5e5136b5432e1);
+</script><div class="td-block-title-wrap"><h4 class="block-title td-block-title"><span class="td-pulldown-size">POPULAR POSTS</span></h4></div><div id=td_uid_10_5e5136b5432e1 class="td_block_inner">
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="http://www.macroprogramming.com/virtual-reality-with-android-and-google-cardboard/" rel="bookmark" class="td-image-wrap" title="Virtual Reality with Android and Google Cardboard"><img width="100" height="70" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2018/08/Virtual-Reality-with-Android-and-Google-Cardboard-100x70.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2018/08/Virtual-Reality-with-Android-and-Google-Cardboard-100x70.jpg 100w, http://www.macroprogramming.com/wp-content/uploads/2018/08/Virtual-Reality-with-Android-and-Google-Cardboard-218x150.jpg 218w" sizes="(max-width: 100px) 100vw, 100px" alt="Virtual Reality with Android and Google Cardboard" title="Virtual Reality with Android and Google Cardboard"/></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/virtual-reality-with-android-and-google-cardboard/" rel="bookmark" title="Virtual Reality with Android and Google Cardboard">Virtual Reality with Android and Google Cardboard</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2018-08-22T21:40:14+00:00" >August 22, 2018</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="http://www.macroprogramming.com/w3-css-compact-but-complete-css-framework/" rel="bookmark" class="td-image-wrap" title="w3.css: Compact but complete CSS framework"><img width="100" height="70" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2019/02/w3-css-compact-but-complete-css-framework-100x70.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2019/02/w3-css-compact-but-complete-css-framework-100x70.jpg 100w, http://www.macroprogramming.com/wp-content/uploads/2019/02/w3-css-compact-but-complete-css-framework-218x150.jpg 218w" sizes="(max-width: 100px) 100vw, 100px" alt="w3.css: Compact but complete CSS framework" title="w3.css: Compact but complete CSS framework"/></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/w3-css-compact-but-complete-css-framework/" rel="bookmark" title="w3.css: Compact but complete CSS framework">w3.css: Compact but complete CSS framework</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2019-02-28T20:27:28+00:00" >February 28, 2019</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 -->
+
+	<div class="td-block-span12">
+
+        <div class="td_module_6 td_module_wrap td-animation-stack">
+
+        <div class="td-module-thumb"><a href="http://www.macroprogramming.com/adobe-spark-instagram-graphics-in-minutes/" rel="bookmark" class="td-image-wrap" title="Adobe Spark: Instagram graphics in minutes"><img width="100" height="70" class="entry-thumb" src="http://www.macroprogramming.com/wp-content/uploads/2019/03/adobe-spark-instagram-graphics-in-minutes-100x70.jpg" srcset="http://www.macroprogramming.com/wp-content/uploads/2019/03/adobe-spark-instagram-graphics-in-minutes-100x70.jpg 100w, http://www.macroprogramming.com/wp-content/uploads/2019/03/adobe-spark-instagram-graphics-in-minutes-218x150.jpg 218w" sizes="(max-width: 100px) 100vw, 100px" alt="Adobe Spark: Instagram graphics in minutes" title="Adobe Spark: Instagram graphics in minutes"/></a></div>
+        <div class="item-details">
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/adobe-spark-instagram-graphics-in-minutes/" rel="bookmark" title="Adobe Spark: Instagram graphics in minutes">Adobe Spark: Instagram graphics in minutes</a></h3>            <div class="td-module-meta-info">
+                                                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2019-03-01T20:00:59+00:00" >March 1, 2019</time></span>                            </div>
+        </div>
+
+        </div>
+
+        
+	</div> <!-- ./td-block-span12 --></div></div> <!-- ./block -->                            </div>
+
+            <div class="td-pb-span4">
+                <div class="td_block_wrap td_block_popular_categories td_uid_11_5e5136b547590_rand widget widget_categories td-pb-border-top td_block_template_1"  data-td-block-uid="td_uid_11_5e5136b547590" ><div class="td-block-title-wrap"><h4 class="block-title td-block-title"><span class="td-pulldown-size">POPULAR CATEGORY</span></h4></div><ul class="td-pb-padding-side"><li><a href="http://www.macroprogramming.com/category/development/"><span class="td-cat-name">Development</span><span class="td-cat-no">66</span></a></li><li><a href="http://www.macroprogramming.com/category/design/"><span class="td-cat-name">Design</span><span class="td-cat-no">23</span></a></li><li><a href="http://www.macroprogramming.com/category/design/css/"><span class="td-cat-name">CSS</span><span class="td-cat-no">12</span></a></li><li><a href="http://www.macroprogramming.com/category/design/css/articles-css/"><span class="td-cat-name">Articles</span><span class="td-cat-no">12</span></a></li><li><a href="http://www.macroprogramming.com/category/development/javascript/"><span class="td-cat-name">JavaScript</span><span class="td-cat-no">11</span></a></li><li><a href="http://www.macroprogramming.com/category/development/javascript/articles-javascript/"><span class="td-cat-name">Articles</span><span class="td-cat-no">11</span></a></li><li><a href="http://www.macroprogramming.com/category/development/java/"><span class="td-cat-name">Java</span><span class="td-cat-no">10</span></a></li><li><a href="http://www.macroprogramming.com/category/development/cms/"><span class="td-cat-name">CMS</span><span class="td-cat-no">10</span></a></li><li><a href="http://www.macroprogramming.com/category/development/cms/articles-cms/"><span class="td-cat-name">Articles</span><span class="td-cat-no">10</span></a></li></ul></div> <!-- ./block -->                            </div>
+        </div>
+    </div>
+</div>
+
+	<!-- Sub Footer -->
+	    <div class="td-sub-footer-container td-container-wrap ">
+        <div class="td-container">
+            <div class="td-pb-row">
+                <div class="td-pb-span td-sub-footer-menu">
+                                    </div>
+
+                <div class="td-pb-span td-sub-footer-copy">
+                    &copy; Copyright 2019 Macro Programming                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div><!--close td-outer-wrap-->
+
+                <div class="td-more-articles-box">
+                    <i class="td-icon-close td-close-more-articles-box"></i>
+                    <span class="td-more-articles-box-title">MORE STORIES</span>
+                    <div class="td-content-more-articles-box">
+
+                    
+        <div class="td_module_1 td_module_wrap td-animation-stack td_module_no_thumb">
+            <div class="td-module-image">
+                                <a href="http://www.macroprogramming.com/category/development/xml/articles-xml/" class="td-post-category">Articles</a>            </div>
+            <h3 class="entry-title td-module-title"><a href="http://www.macroprogramming.com/rdfa-the-elements/" rel="bookmark" title="RDFa, the elements">RDFa, the elements</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="http://www.macroprogramming.com/author/yaser-2-2/">Admin</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2018-09-22T19:46:04+00:00" >September 22, 2018</time></span>                <div class="td-module-comments"><a href="http://www.macroprogramming.com/rdfa-the-elements/#respond">0</a></div>            </div>
+
+            
+        </div>
+
+                            </div>
+                </div>
+
+    <!--
+
+        Theme: Newspaper by tagDiv.com 2017
+        Version: 8.8.2 (rara)
+        Deploy mode: deploy
+        Speed booster: v4.9.3
+
+        uid: 5e5136b54a99d
+    -->
+
+    <script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shCore.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushAS3.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushBash.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushColdFusion.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushClojure.js?ver=20090602'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushCpp.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushCSharp.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushCss.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushDelphi.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushDiff.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushErlang.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushFSharp.js?ver=20091003'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushGroovy.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushJava.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushJavaFX.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushJScript.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushLatex.js?ver=20090613'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushMatlabKey.js?ver=20091209'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushObjC.js?ver=20091207'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushPerl.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushPhp.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushPlain.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushPowerShell.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushPython.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushR.js?ver=20100919'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushRuby.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushScala.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushSql.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushVb.js?ver=3.0.9b'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushXml.js?ver=3.0.9b'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://www.macroprogramming.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+
+	// Infinite scroll support
+	if ( typeof( jQuery ) !== 'undefined' ) {
+		jQuery( function( $ ) {
+			$( document.body ).on( 'post-load', function() {
+				SyntaxHighlighter.highlight();
+			} );
+		} );
+	}
+</script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/themes/Newspaper/js/tagdiv_theme.min.js?ver=8.8.2'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-includes/js/comment-reply.min.js?ver=5.2.5'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/td-cloud-library/assets/js/js_files_for_front.min.js?ver=b750612463a242d669bd59c5cf49d705'></script>
+<script type='text/javascript' src='http://www.macroprogramming.com/wp-includes/js/wp-embed.min.js?ver=5.2.5'></script>
+<script async="async" type='text/javascript' src='http://www.macroprogramming.com/wp-content/plugins/akismet/_inc/form.js?ver=4.1.2'></script>
+
+<!-- JS generated by theme -->
+
+<script>
+    
+
+	
+
+		(function(){
+			var html_jquery_obj = jQuery('html');
+
+			if (html_jquery_obj.length && (html_jquery_obj.is('.ie8') || html_jquery_obj.is('.ie9'))) {
+
+				var path = 'http://www.macroprogramming.com/wp-content/themes/Newspaper/style.css';
+
+				jQuery.get(path, function(data) {
+
+					var str_split_separator = '#td_css_split_separator';
+					var arr_splits = data.split(str_split_separator);
+					var arr_length = arr_splits.length;
+
+					if (arr_length > 1) {
+
+						var dir_path = 'http://www.macroprogramming.com/wp-content/themes/Newspaper';
+						var splited_css = '';
+
+						for (var i = 0; i < arr_length; i++) {
+							if (i > 0) {
+								arr_splits[i] = str_split_separator + ' ' + arr_splits[i];
+							}
+							//jQuery('head').append('<style>' + arr_splits[i] + '</style>');
+
+							var formated_str = arr_splits[i].replace(/\surl\(\'(?!data\:)/gi, function regex_function(str) {
+								return ' url(\'' + dir_path + '/' + str.replace(/url\(\'/gi, '').replace(/^\s+|\s+$/gm,'');
+							});
+
+							splited_css += "<style>" + formated_str + "</style>";
+						}
+
+						var td_theme_css = jQuery('link#td-theme-css');
+
+						if (td_theme_css.length) {
+							td_theme_css.after(splited_css);
+						}
+					}
+				});
+			}
+		})();
+
+	
+	
+</script>
+
+
+<!-- Header style compiled by theme -->
+
+<style>
+    
+.td-header-wrap .black-menu .sf-menu > .current-menu-item > a,
+    .td-header-wrap .black-menu .sf-menu > .current-menu-ancestor > a,
+    .td-header-wrap .black-menu .sf-menu > .current-category-ancestor > a,
+    .td-header-wrap .black-menu .sf-menu > li > a:hover,
+    .td-header-wrap .black-menu .sf-menu > .sfHover > a,
+    .td-header-style-12 .td-header-menu-wrap-full,
+    .sf-menu > .current-menu-item > a:after,
+    .sf-menu > .current-menu-ancestor > a:after,
+    .sf-menu > .current-category-ancestor > a:after,
+    .sf-menu > li:hover > a:after,
+    .sf-menu > .sfHover > a:after,
+    .td-header-style-12 .td-affix,
+    .header-search-wrap .td-drop-down-search:after,
+    .header-search-wrap .td-drop-down-search .btn:hover,
+    input[type=submit]:hover,
+    .td-read-more a,
+    .td-post-category:hover,
+    .td-grid-style-1.td-hover-1 .td-big-grid-post:hover .td-post-category,
+    .td-grid-style-5.td-hover-1 .td-big-grid-post:hover .td-post-category,
+    .td_top_authors .td-active .td-author-post-count,
+    .td_top_authors .td-active .td-author-comments-count,
+    .td_top_authors .td_mod_wrap:hover .td-author-post-count,
+    .td_top_authors .td_mod_wrap:hover .td-author-comments-count,
+    .td-404-sub-sub-title a:hover,
+    .td-search-form-widget .wpb_button:hover,
+    .td-rating-bar-wrap div,
+    .td_category_template_3 .td-current-sub-category,
+    .dropcap,
+    .td_wrapper_video_playlist .td_video_controls_playlist_wrapper,
+    .wpb_default,
+    .wpb_default:hover,
+    .td-left-smart-list:hover,
+    .td-right-smart-list:hover,
+    .woocommerce-checkout .woocommerce input.button:hover,
+    .woocommerce-page .woocommerce a.button:hover,
+    .woocommerce-account div.woocommerce .button:hover,
+    #bbpress-forums button:hover,
+    .bbp_widget_login .button:hover,
+    .td-footer-wrapper .td-post-category,
+    .td-footer-wrapper .widget_product_search input[type="submit"]:hover,
+    .woocommerce .product a.button:hover,
+    .woocommerce .product #respond input#submit:hover,
+    .woocommerce .checkout input#place_order:hover,
+    .woocommerce .woocommerce.widget .button:hover,
+    .single-product .product .summary .cart .button:hover,
+    .woocommerce-cart .woocommerce table.cart .button:hover,
+    .woocommerce-cart .woocommerce .shipping-calculator-form .button:hover,
+    .td-next-prev-wrap a:hover,
+    .td-load-more-wrap a:hover,
+    .td-post-small-box a:hover,
+    .page-nav .current,
+    .page-nav:first-child > div,
+    .td_category_template_8 .td-category-header .td-category a.td-current-sub-category,
+    .td_category_template_4 .td-category-siblings .td-category a:hover,
+    #bbpress-forums .bbp-pagination .current,
+    #bbpress-forums #bbp-single-user-details #bbp-user-navigation li.current a,
+    .td-theme-slider:hover .slide-meta-cat a,
+    a.vc_btn-black:hover,
+    .td-trending-now-wrapper:hover .td-trending-now-title,
+    .td-scroll-up,
+    .td-smart-list-button:hover,
+    .td-weather-information:before,
+    .td-weather-week:before,
+    .td_block_exchange .td-exchange-header:before,
+    .td_block_big_grid_9.td-grid-style-1 .td-post-category,
+    .td_block_big_grid_9.td-grid-style-5 .td-post-category,
+    .td-grid-style-6.td-hover-1 .td-module-thumb:after,
+    .td-pulldown-syle-2 .td-subcat-dropdown ul:after,
+    .td_block_template_9 .td-block-title:after,
+    .td_block_template_15 .td-block-title:before,
+    div.wpforms-container .wpforms-form div.wpforms-submit-container button[type=submit] {
+        background-color: #4ac5db;
+    }
+
+    .td_block_template_4 .td-related-title .td-cur-simple-item:before {
+        border-color: #4ac5db transparent transparent transparent !important;
+    }
+
+    .woocommerce .woocommerce-message .button:hover,
+    .woocommerce .woocommerce-error .button:hover,
+    .woocommerce .woocommerce-info .button:hover {
+        background-color: #4ac5db !important;
+    }
+    
+    
+    .td_block_template_4 .td-related-title .td-cur-simple-item,
+    .td_block_template_3 .td-related-title .td-cur-simple-item,
+    .td_block_template_9 .td-related-title:after {
+        background-color: #4ac5db;
+    }
+
+    .woocommerce .product .onsale,
+    .woocommerce.widget .ui-slider .ui-slider-handle {
+        background: none #4ac5db;
+    }
+
+    .woocommerce.widget.widget_layered_nav_filters ul li a {
+        background: none repeat scroll 0 0 #4ac5db !important;
+    }
+
+    a,
+    cite a:hover,
+    .td_mega_menu_sub_cats .cur-sub-cat,
+    .td-mega-span h3 a:hover,
+    .td_mod_mega_menu:hover .entry-title a,
+    .header-search-wrap .result-msg a:hover,
+    .td-header-top-menu .td-drop-down-search .td_module_wrap:hover .entry-title a,
+    .td-header-top-menu .td-icon-search:hover,
+    .td-header-wrap .result-msg a:hover,
+    .top-header-menu li a:hover,
+    .top-header-menu .current-menu-item > a,
+    .top-header-menu .current-menu-ancestor > a,
+    .top-header-menu .current-category-ancestor > a,
+    .td-social-icon-wrap > a:hover,
+    .td-header-sp-top-widget .td-social-icon-wrap a:hover,
+    .td-page-content blockquote p,
+    .td-post-content blockquote p,
+    .mce-content-body blockquote p,
+    .comment-content blockquote p,
+    .wpb_text_column blockquote p,
+    .td_block_text_with_title blockquote p,
+    .td_module_wrap:hover .entry-title a,
+    .td-subcat-filter .td-subcat-list a:hover,
+    .td-subcat-filter .td-subcat-dropdown a:hover,
+    .td_quote_on_blocks,
+    .dropcap2,
+    .dropcap3,
+    .td_top_authors .td-active .td-authors-name a,
+    .td_top_authors .td_mod_wrap:hover .td-authors-name a,
+    .td-post-next-prev-content a:hover,
+    .author-box-wrap .td-author-social a:hover,
+    .td-author-name a:hover,
+    .td-author-url a:hover,
+    .td_mod_related_posts:hover h3 > a,
+    .td-post-template-11 .td-related-title .td-related-left:hover,
+    .td-post-template-11 .td-related-title .td-related-right:hover,
+    .td-post-template-11 .td-related-title .td-cur-simple-item,
+    .td-post-template-11 .td_block_related_posts .td-next-prev-wrap a:hover,
+    .comment-reply-link:hover,
+    .logged-in-as a:hover,
+    #cancel-comment-reply-link:hover,
+    .td-search-query,
+    .td-category-header .td-pulldown-category-filter-link:hover,
+    .td-category-siblings .td-subcat-dropdown a:hover,
+    .td-category-siblings .td-subcat-dropdown a.td-current-sub-category,
+    .widget a:hover,
+    .td_wp_recentcomments a:hover,
+    .archive .widget_archive .current,
+    .archive .widget_archive .current a,
+    .widget_calendar tfoot a:hover,
+    .woocommerce a.added_to_cart:hover,
+    .woocommerce-account .woocommerce-MyAccount-navigation a:hover,
+    #bbpress-forums li.bbp-header .bbp-reply-content span a:hover,
+    #bbpress-forums .bbp-forum-freshness a:hover,
+    #bbpress-forums .bbp-topic-freshness a:hover,
+    #bbpress-forums .bbp-forums-list li a:hover,
+    #bbpress-forums .bbp-forum-title:hover,
+    #bbpress-forums .bbp-topic-permalink:hover,
+    #bbpress-forums .bbp-topic-started-by a:hover,
+    #bbpress-forums .bbp-topic-started-in a:hover,
+    #bbpress-forums .bbp-body .super-sticky li.bbp-topic-title .bbp-topic-permalink,
+    #bbpress-forums .bbp-body .sticky li.bbp-topic-title .bbp-topic-permalink,
+    .widget_display_replies .bbp-author-name,
+    .widget_display_topics .bbp-author-name,
+    .footer-text-wrap .footer-email-wrap a,
+    .td-subfooter-menu li a:hover,
+    .footer-social-wrap a:hover,
+    a.vc_btn-black:hover,
+    .td-smart-list-dropdown-wrap .td-smart-list-button:hover,
+    .td_module_17 .td-read-more a:hover,
+    .td_module_18 .td-read-more a:hover,
+    .td_module_19 .td-post-author-name a:hover,
+    .td-instagram-user a,
+    .td-pulldown-syle-2 .td-subcat-dropdown:hover .td-subcat-more span,
+    .td-pulldown-syle-2 .td-subcat-dropdown:hover .td-subcat-more i,
+    .td-pulldown-syle-3 .td-subcat-dropdown:hover .td-subcat-more span,
+    .td-pulldown-syle-3 .td-subcat-dropdown:hover .td-subcat-more i,
+    .td-block-title-wrap .td-wrapper-pulldown-filter .td-pulldown-filter-display-option:hover,
+    .td-block-title-wrap .td-wrapper-pulldown-filter .td-pulldown-filter-display-option:hover i,
+    .td-block-title-wrap .td-wrapper-pulldown-filter .td-pulldown-filter-link:hover,
+    .td-block-title-wrap .td-wrapper-pulldown-filter .td-pulldown-filter-item .td-cur-simple-item,
+    .td_block_template_2 .td-related-title .td-cur-simple-item,
+    .td_block_template_5 .td-related-title .td-cur-simple-item,
+    .td_block_template_6 .td-related-title .td-cur-simple-item,
+    .td_block_template_7 .td-related-title .td-cur-simple-item,
+    .td_block_template_8 .td-related-title .td-cur-simple-item,
+    .td_block_template_9 .td-related-title .td-cur-simple-item,
+    .td_block_template_10 .td-related-title .td-cur-simple-item,
+    .td_block_template_11 .td-related-title .td-cur-simple-item,
+    .td_block_template_12 .td-related-title .td-cur-simple-item,
+    .td_block_template_13 .td-related-title .td-cur-simple-item,
+    .td_block_template_14 .td-related-title .td-cur-simple-item,
+    .td_block_template_15 .td-related-title .td-cur-simple-item,
+    .td_block_template_16 .td-related-title .td-cur-simple-item,
+    .td_block_template_17 .td-related-title .td-cur-simple-item,
+    .td-theme-wrap .sf-menu ul .td-menu-item > a:hover,
+    .td-theme-wrap .sf-menu ul .sfHover > a,
+    .td-theme-wrap .sf-menu ul .current-menu-ancestor > a,
+    .td-theme-wrap .sf-menu ul .current-category-ancestor > a,
+    .td-theme-wrap .sf-menu ul .current-menu-item > a,
+    .td_outlined_btn {
+        color: #4ac5db;
+    }
+
+    a.vc_btn-black.vc_btn_square_outlined:hover,
+    a.vc_btn-black.vc_btn_outlined:hover,
+    .td-mega-menu-page .wpb_content_element ul li a:hover,
+    .td-theme-wrap .td-aj-search-results .td_module_wrap:hover .entry-title a,
+    .td-theme-wrap .header-search-wrap .result-msg a:hover {
+        color: #4ac5db !important;
+    }
+
+    .td-next-prev-wrap a:hover,
+    .td-load-more-wrap a:hover,
+    .td-post-small-box a:hover,
+    .page-nav .current,
+    .page-nav:first-child > div,
+    .td_category_template_8 .td-category-header .td-category a.td-current-sub-category,
+    .td_category_template_4 .td-category-siblings .td-category a:hover,
+    #bbpress-forums .bbp-pagination .current,
+    .post .td_quote_box,
+    .page .td_quote_box,
+    a.vc_btn-black:hover,
+    .td_block_template_5 .td-block-title > *,
+    .td_outlined_btn {
+        border-color: #4ac5db;
+    }
+
+    .td_wrapper_video_playlist .td_video_currently_playing:after {
+        border-color: #4ac5db !important;
+    }
+
+    .header-search-wrap .td-drop-down-search:before {
+        border-color: transparent transparent #4ac5db transparent;
+    }
+
+    .block-title > span,
+    .block-title > a,
+    .block-title > label,
+    .widgettitle,
+    .widgettitle:after,
+    .td-trending-now-title,
+    .td-trending-now-wrapper:hover .td-trending-now-title,
+    .wpb_tabs li.ui-tabs-active a,
+    .wpb_tabs li:hover a,
+    .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container .vc_tta-tab.vc_active > a,
+    .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container .vc_tta-tab:hover > a,
+    .td_block_template_1 .td-related-title .td-cur-simple-item,
+    .woocommerce .product .products h2:not(.woocommerce-loop-product__title),
+    .td-subcat-filter .td-subcat-dropdown:hover .td-subcat-more, 
+    .td_3D_btn,
+    .td_shadow_btn,
+    .td_default_btn,
+    .td_round_btn, 
+    .td_outlined_btn:hover {
+    	background-color: #4ac5db;
+    }
+
+    .woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+    	background-color: #4ac5db !important;
+    }
+
+    .block-title,
+    .td_block_template_1 .td-related-title,
+    .wpb_tabs .wpb_tabs_nav,
+    .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container,
+    .woocommerce div.product .woocommerce-tabs ul.tabs:before {
+        border-color: #4ac5db;
+    }
+    .td_block_wrap .td-subcat-item a.td-cur-simple-item {
+	    color: #4ac5db;
+	}
+
+
+    
+    .td-grid-style-4 .entry-title
+    {
+        background-color: rgba(74, 197, 219, 0.7);
+    }
+
+    
+    .block-title > span,
+    .block-title > span > a,
+    .block-title > a,
+    .block-title > label,
+    .widgettitle,
+    .widgettitle:after,
+    .td-trending-now-title,
+    .td-trending-now-wrapper:hover .td-trending-now-title,
+    .wpb_tabs li.ui-tabs-active a,
+    .wpb_tabs li:hover a,
+    .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container .vc_tta-tab.vc_active > a,
+    .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container .vc_tta-tab:hover > a,
+    .td_block_template_1 .td-related-title .td-cur-simple-item,
+    .woocommerce .product .products h2:not(.woocommerce-loop-product__title),
+    .td-subcat-filter .td-subcat-dropdown:hover .td-subcat-more,
+    .td-weather-information:before,
+    .td-weather-week:before,
+    .td_block_exchange .td-exchange-header:before,
+    .td-theme-wrap .td_block_template_3 .td-block-title > *,
+    .td-theme-wrap .td_block_template_4 .td-block-title > *,
+    .td-theme-wrap .td_block_template_7 .td-block-title > *,
+    .td-theme-wrap .td_block_template_9 .td-block-title:after,
+    .td-theme-wrap .td_block_template_10 .td-block-title::before,
+    .td-theme-wrap .td_block_template_11 .td-block-title::before,
+    .td-theme-wrap .td_block_template_11 .td-block-title::after,
+    .td-theme-wrap .td_block_template_14 .td-block-title,
+    .td-theme-wrap .td_block_template_15 .td-block-title:before,
+    .td-theme-wrap .td_block_template_17 .td-block-title:before {
+        background-color: #222222;
+    }
+
+    .woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+    	background-color: #222222 !important;
+    }
+
+    .block-title,
+    .td_block_template_1 .td-related-title,
+    .wpb_tabs .wpb_tabs_nav,
+    .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container,
+    .woocommerce div.product .woocommerce-tabs ul.tabs:before,
+    .td-theme-wrap .td_block_template_5 .td-block-title > *,
+    .td-theme-wrap .td_block_template_17 .td-block-title,
+    .td-theme-wrap .td_block_template_17 .td-block-title::before {
+        border-color: #222222;
+    }
+
+    .td-theme-wrap .td_block_template_4 .td-block-title > *:before,
+    .td-theme-wrap .td_block_template_17 .td-block-title::after {
+        border-color: #222222 transparent transparent transparent;
+    }
+    
+    .td-theme-wrap .td_block_template_4 .td-related-title .td-cur-simple-item:before {
+        border-color: #222222 transparent transparent transparent !important;
+    }
+
+    
+    .td-menu-background:before,
+    .td-search-background:before {
+        background: rgba(0,0,0,0.8);
+        background: -moz-linear-gradient(top, rgba(0,0,0,0.8) 0%, rgba(74,197,219,0.8) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0.8)), color-stop(100%, rgba(74,197,219,0.8)));
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0.8) 0%, rgba(74,197,219,0.8) 100%);
+        background: -o-linear-gradient(top, rgba(0,0,0,0.8) 0%, @mobileu_gradient_two_mob 100%);
+        background: -ms-linear-gradient(top, rgba(0,0,0,0.8) 0%, rgba(74,197,219,0.8) 100%);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(74,197,219,0.8) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(0,0,0,0.8)', endColorstr='rgba(74,197,219,0.8)', GradientType=0 );
+    }
+
+    
+    .td-mobile-content .current-menu-item > a,
+    .td-mobile-content .current-menu-ancestor > a,
+    .td-mobile-content .current-category-ancestor > a,
+    #td-mobile-nav .td-menu-login-section a:hover,
+    #td-mobile-nav .td-register-section a:hover,
+    #td-mobile-nav .td-menu-socials-wrap a:hover i,
+    .td-search-close a:hover i {
+        color: #4ac5db;
+    }
+
+    
+    .white-popup-block:after {
+        background: rgba(0,0,0,0.8);
+        background: -moz-linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(74,197,219,0.8) 100%);
+        background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(0,0,0,0.8)), color-stop(100%, rgba(74,197,219,0.8)));
+        background: -webkit-linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(74,197,219,0.8) 100%);
+        background: -o-linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(74,197,219,0.8) 100%);
+        background: -ms-linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(74,197,219,0.8) 100%);
+        background: linear-gradient(45deg, rgba(0,0,0,0.8) 0%, rgba(74,197,219,0.8) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(0,0,0,0.8)', endColorstr='rgba(74,197,219,0.8)', GradientType=0 );
+    }
+
+
+    
+    .td-banner-wrap-full,
+    .td-header-style-11 .td-logo-wrap-full {
+        background-color: #f7f7f7;
+    }
+
+    .td-header-style-11 .td-logo-wrap-full {
+        border-bottom: 0;
+    }
+
+    @media (min-width: 1019px) {
+        .td-header-style-2 .td-header-sp-recs,
+        .td-header-style-5 .td-a-rec-id-header > div,
+        .td-header-style-5 .td-g-rec-id-header > .adsbygoogle,
+        .td-header-style-6 .td-a-rec-id-header > div,
+        .td-header-style-6 .td-g-rec-id-header > .adsbygoogle,
+        .td-header-style-7 .td-a-rec-id-header > div,
+        .td-header-style-7 .td-g-rec-id-header > .adsbygoogle,
+        .td-header-style-8 .td-a-rec-id-header > div,
+        .td-header-style-8 .td-g-rec-id-header > .adsbygoogle,
+        .td-header-style-12 .td-a-rec-id-header > div,
+        .td-header-style-12 .td-g-rec-id-header > .adsbygoogle {
+            margin-bottom: 24px !important;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 1018px) {
+        .td-header-style-2 .td-header-sp-recs,
+        .td-header-style-5 .td-a-rec-id-header > div,
+        .td-header-style-5 .td-g-rec-id-header > .adsbygoogle,
+        .td-header-style-6 .td-a-rec-id-header > div,
+        .td-header-style-6 .td-g-rec-id-header > .adsbygoogle,
+        .td-header-style-7 .td-a-rec-id-header > div,
+        .td-header-style-7 .td-g-rec-id-header > .adsbygoogle,
+        .td-header-style-8 .td-a-rec-id-header > div,
+        .td-header-style-8 .td-g-rec-id-header > .adsbygoogle,
+        .td-header-style-12 .td-a-rec-id-header > div,
+        .td-header-style-12 .td-g-rec-id-header > .adsbygoogle {
+            margin-bottom: 14px !important;
+        }
+    }
+
+     
+    .td-menu-background,
+    .td-search-background {
+        background-image: url('http://www.macroprogramming.com/wp-content/uploads/2018/08/14.jpg');
+    }
+
+    
+    .white-popup-block:before {
+        background-image: url('http://www.macroprogramming.com/wp-content/uploads/2018/08/14.jpg');
+    }
+
+    
+    .td-excerpt,
+    .td_module_14 .td-excerpt {
+        font-family:"Open Sans";
+	font-size:13px;
+	line-height:21px;
+	
+    }
+
+
+	
+    .td-post-content p,
+    .td-post-content {
+        font-family:"Open Sans";
+	font-size:17px;
+	line-height:31px;
+	
+    }
+</style>
+
+
+
+			<div id="tdw-css-writer" style="display: none" class="tdw-drag-dialog tdc-window-sidebar">
+				<header>
+
+				
+					<a title="Editor" class="tdw-tab tdc-tab-active" href="#" data-tab-content="tdw-tab-editor">Edit with Live CSS</a>
+					<div class="tdw-less-info" title="This will be red when errors are detected in your CSS and LESS"></div>
+				
+				</header>
+				<div class="tdw-content">
+
+					
+					<div class="tdw-tabs-content tdw-tab-editor tdc-tab-content-active">
+
+
+						<script>
+
+							(function(jQuery, undefined) {
+
+								jQuery(window).ready(function() {
+
+									if ( 'undefined' !== typeof tdcAdminIFrameUI ) {
+										var $liveIframe  = tdcAdminIFrameUI.getLiveIframe();
+
+										if ( $liveIframe.length ) {
+											$liveIframe.load(function() {
+												$liveIframe.contents().find( 'body').append( '<textarea class="tdw-css-writer-editor" style="display: none"></textarea>' );
+											});
+										}
+									}
+
+								});
+
+							})(jQuery);
+
+						</script>
+
+
+						<textarea class="tdw-css-writer-editor td_live_css_uid_1_5e5136b54c315"></textarea>
+						<div id="td_live_css_uid_1_5e5136b54c315" class="td-code-editor"></div>
+
+
+						<script>
+							jQuery(window).load(function (){
+
+								if ( 'undefined' !== typeof tdLiveCssInject ) {
+
+									tdLiveCssInject.init();
+
+
+									var editor_textarea = jQuery('.td_live_css_uid_1_5e5136b54c315');
+									var languageTools = ace.require("ace/ext/language_tools");
+									var tdcCompleter = {
+										getCompletions: function (editor, session, pos, prefix, callback) {
+											if (prefix.length === 0) {
+												callback(null, []);
+												return
+											}
+
+											if ('undefined' !== typeof tdcAdminIFrameUI) {
+
+												var data = {
+													error: undefined,
+													getShortcode: ''
+												};
+
+												tdcIFrameData.getShortcodeFromData(data);
+
+												if (!_.isUndefined(data.error)) {
+													tdcDebug.log(data.error);
+												}
+
+												if (!_.isUndefined(data.getShortcode)) {
+
+													var regex = /el_class=\"([A-Za-z0-9_-]*\s*)+\"/g,
+														results = data.getShortcode.match(regex);
+
+													var elClasses = {};
+
+													for (var i = 0; i < results.length; i++) {
+														var currentClasses = results[i]
+															.replace('el_class="', '')
+															.replace('"', '')
+															.split(' ');
+
+														for (var j = 0; j < currentClasses.length; j++) {
+															if (_.isUndefined(elClasses[currentClasses[j]])) {
+																elClasses[currentClasses[j]] = '';
+															}
+														}
+													}
+
+													var arrElClasses = [];
+
+													for (var prop in elClasses) {
+														arrElClasses.push(prop);
+													}
+
+													callback(null, arrElClasses.map(function (item) {
+														return {
+															name: item,
+															value: item,
+															meta: 'in_page'
+														}
+													}));
+												}
+											}
+										}
+									};
+									languageTools.addCompleter(tdcCompleter);
+
+									window.editor = ace.edit("td_live_css_uid_1_5e5136b54c315");
+
+									// 'change' handler is written as function because it's called by tdc_on_add_css_live_components (of wp_footer hook)
+									// We did it to reattach the existing compiled css to the new content received from server.
+									window.editorChangeHandler = function () {
+										//tdwState.lessWasEdited = true;
+
+										window.onbeforeunload = function () {
+											if (tdwState.lessWasEdited) {
+												return "You have attempted to leave this page. Are you sure?";
+											}
+											return false;
+										};
+
+										var editorValue = editor.getSession().getValue();
+
+										editor_textarea.val(editorValue);
+
+										if ('undefined' !== typeof tdcAdminIFrameUI) {
+											tdcAdminIFrameUI.getLiveIframe().contents().find('.tdw-css-writer-editor:first').val(editorValue);
+
+											// Mark the content as modified
+											// This is important for showing info when composer closes
+                                            tdcMain.setContentModified();
+										}
+
+										tdLiveCssInject.less();
+									};
+
+									editor.getSession().setValue(editor_textarea.val());
+									editor.getSession().on('change', editorChangeHandler);
+
+									editor.setTheme("ace/theme/textmate");
+									editor.setShowPrintMargin(false);
+									editor.getSession().setMode("ace/mode/less");
+									editor.setOptions({
+										enableBasicAutocompletion: true,
+										enableSnippets: true,
+										enableLiveAutocompletion: false
+									});
+
+								}
+
+							});
+						</script>
+
+					</div>
+				</div>
+
+				<footer>
+
+					
+						<a href="#" class="tdw-save-css">Save</a>
+						<div class="tdw-more-info-text">Write CSS OR LESS and hit save. CTRL + SPACE for auto-complete.</div>
+
+					
+					<div class="tdw-resize"></div>
+				</footer>
+			</div>
+			
+</body>
+</html>
